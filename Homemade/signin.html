@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background:#edd8e2;
+        }
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .input-box {
+            margin: 10px 0;
+            text-align: left;
+        }
+        .input-box label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+        }
+        .input-box input:focus {
+            border-color: #bf7898;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            background:#bf7898;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background:#edd8e2;
+          
+        }
+        .login-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .login-link a {
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form>
+            <div class="input-box">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-box">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-box">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a password" required>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+        </form>
+        <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
+</body>
+</html>

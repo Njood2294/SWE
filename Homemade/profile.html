@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="../HomePageCSS.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+   
+    background: #edd8e2;}
+
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 800px;
+   margin-left: 16em;
+}
+
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+    border: 1px solid #ccc;
+}
+
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+.username {
+    color: gray;
+}
+
+.info p {
+    display: flex;
+    justify-content: space-between;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.edit-icon {
+    cursor: pointer;
+    color: gray;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="../Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
+            <h3 id="logo-title">Hand made</h3>
+        </div>
+        <div id="comHeader">
+           <a> <img src="../cart-shopping-solid.svg" alt="cart" ></a>
+           <a> <img src="../user-solid.svg" alt="profile"></a>
+           <a> <img src="../logout.svg" alt="logout" ></a>
+        </div>
+        <div id="comHeader1">
+            <a href="" class="categories">painting</a>
+            <a href="" class="categories">pottery</a>
+            <a href="" class="categories">Wood craving</a>
+            <a href="" class="categories">Mirrors</a>
+            <a href="" class="categories">Chains</a>
+        </div>
+
+
+
+    
+    <div class="profile-container">
+        <div class="profile-card">
+
+            <img src="Images/Profile-PNG-File.png" alt="Profile Picture" class="profile-img">
+            <h2>Jessica Alba</h2>
+            <p class="username">@jennywilson <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+
+            <div class="info">
+                <p><strong>Username</strong> <span>Jenny Wilson</span> <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+                <p><strong>Email</strong> <span>jenny@gmail.com</span> <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+                <p><strong>Address</strong> <span>New York, USA</span> <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+                <p><strong>Nickname</strong> <span>Sky Angel</span> <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+                <p><strong>DOB</strong> <span>April 28, 1981</span> <span class="edit-icon"><img src="764599.png" hight="15em" width="15em"></span></p>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us:</p>
+            <img src="../twitter.webp" alt="Twitter Icon"> @HandMade
+            <img src="../instagram.webp" alt="Instagram Icon"> @HandMade
+            <img src="../email.png" alt="Email Icon"> HandMade@gmail.com
+        </div>
+        <div class="footer-right">
+            &copy; 2025 HandMade
+        </div>
+    </footer>
+</body>
+</html>
