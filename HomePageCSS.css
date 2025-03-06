@@ -20,7 +20,7 @@ header {
 .logo-title {
     display: flex;
     align-items: center;
-    color: #BF7896;
+    color: #9B5372;
 }
 #logo-title{
     margin-left: 3%;
@@ -65,7 +65,7 @@ header {
     
    /* background-color: #BF7896; 
     border-radius: 0.2em;*/ 
-    color: #BF7896;
+    color: #9B5372;
 }    
 
 
@@ -84,7 +84,7 @@ footer {
     width: 100%;
     height: 1%;
     border-top: 0.2em solid #e4cbcb; 
-    color: #BF7896;
+    color: #9B5372;
     font-weight: bold;
 }
 

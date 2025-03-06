@@ -37,7 +37,7 @@ function displayReviews() {
     });
 }
 
-// ⭐⭐⭐⭐ دالة لإنشاء النجوم ⭐⭐⭐⭐
+
 function generateStars(rating) {
     let starsHTML = "";
     for (let i = 0; i < 5; i++) {
