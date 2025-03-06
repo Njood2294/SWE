@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hand made</title>
+    <link rel="stylesheet" href="HomePageCSS.css"> 
+    <script src="review.js"></script>
+    <style>
+         
+.container {
+    width: 80%;
+    
+    background: #DFB8CC;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+margin-top: 7em;
+margin-left:8.5em;
+
+}
+
+.new-post {
+    padding: 1.9px;
+    border-radius: 10px;
+    margin-bottom: 1.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:1.5em;
+}
+
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
+
+ 
+.input-container textarea {
+    width: 95%;
+    padding: 0.6em;
+    border-radius: 8px;
+    border: none;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+.input-container input[type="text"]{
+    width: 15%;
+    height: 4%;
+    padding: 0.5em;
+    border-radius: 8px;
+    border: none;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    margin-right: 42em;
+    margin-top: 0.8em;
+
+}
+
+
+textarea {
+    height: 7.5em;
+    resize: none;
+    overflow-y: auto;
+}
+
+input[type="file"] {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #BF7896;
+    outline: none;
+    align-self: flex-start;
+  margin-left: 2em
+   
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #BF7896;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+   
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: #9B5372;
+}
+
+.add-post  {
+    background: #BF7896;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #9B5372;
+}
+
+
+
+.star {
+    width: 1.9em;  
+    height: 1.9em;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.star:hover {
+    transform: scale(1.1);
+}
+
+#p{
+    display: flex;
+    gap:1em;
+    margin-right: 10em;
+    color: #BF7896;
+}
+
+#tit{
+    color: #9B5372;
+    text-align: center;
+    
+}
+.starBox {
+    background: white;
+    padding: 0.9em;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 12%;
+    
+    position: relative; 
+    margin-left: 60em;
+    margin-top: -3.5em;
+}
+
+.rating2 {
+    display: flex;
+    gap: 0.18em;
+    position: absolute; 
+    left: 0.6em; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    z-index: 2; 
+    margin-left: -0.3em;
+}
+
+
+
+    </style>
+   
+
+
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
+            <h3 id="logo-title">Hand made</h3>
+        </div>
+        <div id="comHeader">
+           <a> <img src="cart-shopping-solid.svg" alt="cart" ></a>
+           <a> <img src="user-solid.svg" alt="profile"></a>
+           <a> <img src="logout.svg" alt="logout" ></a>
+        </div>
+        <div id="comHeader1">
+            <a href="" class="categories">painting</a>
+            <a href="" class="categories">pottery</a>
+            <a href="" class="categories">Wood craving</a>
+            <a href="" class="categories">Mirrors</a>
+            <a href="" class="categories">Chains</a>
+        </div>
+
+
+
+    </header>
+    <main id="HomePageMain">
+        <div class="container">
+            <h1 id="tit">add new review</h1>
+            <div class="new-post">
+                <div class="input-container">
+                    <div id="p">
+                        <h3>product name</h3>
+                    <input type="text" id="productName" name="productName" ></div>
+                    <textarea placeholder="Write your reveiw here....."></textarea>
+                   
+                </div>
+                
+                <input type="file" id="fileUpload">
+                <div class="starBox">
+              
+                <div class="rating2">
+                    <img src="emptystar.PNG" alt="نجمة" class="star">
+                    <img src="emptystar.PNG" alt="نجمة" class="star">
+                    <img src="emptystar.PNG" alt="نجمة" class="star">
+                    <img src="emptystar.PNG" alt="نجمة" class="star">
+                    <img src="emptystar.PNG" alt="نجمة" class="star">
+                </div>
+                     
+            </div>
+               
+               <button class="add-post" onclick="addReview()">Add reveiw</button> 
+               
+            </div>
+        </div>
+        
+       
+    </main>
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us:</p>
+            <img src="twitter.webp" alt="Twitter Icon"> @HandMade
+            <img src="instagram.webp" alt="Instagram Icon"> @HandMade
+            <img src="email.png" alt="Email Icon"> HandMade@gmail.com
+        </div>
+        <div class="footer-right">
+            &copy; 2025 HandMade
+        </div>
+    </footer>
+</body>
+</html>
