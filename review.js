@@ -1,7 +1,9 @@
 
-window.onload = function() {
+
+
+/*window.onload = function() {
     localStorage.clear();
-};
+};*/
 
 document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll(".rating2 .star");
@@ -25,9 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
        
-   
-
-    
     document.querySelector(".add-post").addEventListener("click", function () {
         const productName = document.getElementById("productName").value.trim();
         const reviewText = document.querySelector("textarea").value.trim();
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        
         if (fileInput.files.length > 0) {
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -54,10 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function saveReview(productName, reviewText, rating, imageUrl) {
-        
         let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
     
-       
         let newReview = {
             userName: "Guest", 
             productName: productName,
@@ -65,18 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
             rating: rating,
             imageUrl: imageUrl,
             likes: 0,
-            dislikes: 0,
-            liked: false,  
-            disliked: false
-             
+            dislikes: 0
         };
     
         reviews.push(newReview);
         localStorage.setItem("reviews", JSON.stringify(reviews));
     
-        
         window.location.href = "HomePage.html"; 
     }
-});
-
+});  
 
