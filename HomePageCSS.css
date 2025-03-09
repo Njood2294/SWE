@@ -62,9 +62,6 @@ header {
 }
 .categories{
     padding: 0.1em; 
-    
-   /* background-color: #BF7896; 
-    border-radius: 0.2em;*/ 
     color: #9B5372;
 }    
 
@@ -101,7 +98,6 @@ footer {
    padding-right: 6em;
    
 }
-
 
 
 .footer-left {
@@ -183,18 +179,9 @@ a{
     font-size: 1em;
     background-color: #BF7896;
     color: white;
-   /* border: none;*/
     border-radius: 5px;
    
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -232,8 +219,8 @@ a{
 
 
 .review-card {
-    min-width: 14em; /* حوالي 220px */
-    max-width: 15.6em; /* حوالي 250px */
+    min-width: 14em; 
+    max-width: 15.6em; 
     padding: 0.5em;
     background: #fff;
     border-radius: 0.5em;
@@ -244,39 +231,36 @@ a{
 }
 
 .user-name {
-    font-size: 1em; /* يعادل 16px */
+    font-size: 1em; 
     font-weight: bold;
     color: #BF7896;
 }
 
 .user-image {
-    width: 10em; /* حوالي 80px */
-    height: 10em; /* حوالي 80px */
+    width: 10em; 
+    height: 10em; 
     border-radius: 5%;
     object-fit: cover;
     margin: 0.625em auto;
 }
 
 .review-title {
-    font-size: 0.875em; /* حوالي 14px */
+    font-size: 0.875em;
     font-weight: bold;
     color: #444;
 }
 
 .review-text {
-    font-size: 0.8125em; /* حوالي 13px */
+    font-size: 0.8125em; 
     color: #555;
     margin-bottom: 0.5em;
-    word-wrap: break-word;  /* يسمح للكلمات بالطوي إذا لم يكن هناك مساحة */
-    overflow-wrap: break-word; /* يضمن أن الكلمات الطويلة يتم قطعها وتنزل للسطر التالي */
-    white-space: normal; /* يسمح بتعدد الأسطر وعدم إبقاء النص في سطر واحد */
+    word-wrap: break-word;  /* to go to next line if the line is full*/
+    overflow-wrap: break-word; /*if the word is long it will go to next line*/
+    white-space: normal; /* allow to have multiple line*/
 
 }
 
-/*.rating {
-    font-size: 1em; 
-    color: #BF7896;
-}*/
+
 
 
 #titel {
@@ -293,7 +277,7 @@ a{
     font-size: 1em;
     background-color: #BF7896;
     color: white;
-    border-radius: 0.3125em; /* حوالي 5px */
+    border-radius: 0.3125em; 
     
     
 }
@@ -305,7 +289,7 @@ a{
 
 .review-footer {
     display: flex;
-    justify-content: space-between; /* يجعل النجوم على اليسار والإعجاب على اليمين */
+    justify-content: space-between; 
     align-items: center;
     margin-top: 0.5em;
     margin-right: 1em;
@@ -314,13 +298,13 @@ a{
 
 .rating {
     display: flex;
-    gap: 3px; /* تباعد بسيط بين النجوم */
+    gap: 3px; 
     background-color: white;
     border-radius: 0.3125em;
 }
 
 .star {
-    width: 16px; /* حجم النجمة */
+    width: 16px; 
     height: 16px;
     
 }
@@ -328,15 +312,15 @@ a{
 .likes {
     display: flex;
     align-items: center;
-    gap: 0.5em; /* مسافة بين العناصر */
+    gap: 0.5em; 
     font-size: 14px;
     color: #555;
 }
 
 .like-icon, .dislike-icon {
-    width: 18px; /* حجم أيقونات الإعجاب */
+    width: 18px; 
     height: 18px;
-    cursor: pointer; /* يجعل الأيقونات قابلة للنقر */
+    cursor: pointer;
 }
 
 .like-count, .dislike-count {
