@@ -33,6 +33,7 @@
         <div class="cart-container">
             <div id="cartItemsContainer" class="cart-items">
                 <!-- Cart items dynamically added here -->
+                <p id="empty-message" style="display: none;">Your cart is empty!</p>
             </div>
             <div class="cart-summary">
                 <button id="emptyCart" class="empty-cart-btn">Empty Cart</button>
@@ -133,6 +134,12 @@
         .remove-item:hover {
             color: #d77a8b;
         }
+
+        #empty-message {
+            font-size: 18px;
+            color: #b85f72;
+            font-weight: bold;
+        }
     </style>
 
     <script>
@@ -140,41 +147,50 @@
             const cartItemsContainer = document.getElementById("cartItemsContainer");
             const totalPriceDisplay = document.getElementById("total-price");
             const emptyCartBtn = document.getElementById("emptyCart");
+            const emptyMessage = document.getElementById("empty-message");
             const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-            // Add an item example to the cart
+            function renderCart() {
+                cartItemsContainer.innerHTML = "";
+                let totalPrice = 0;
+
+                if (cartItems.length === 0) {
+                    emptyMessage.style.display = "block";
+                } else {
+                    emptyMessage.style.display = "none";
+                    cartItems.forEach((item, index) => {
+                        const itemDiv = document.createElement("div");
+                        itemDiv.classList.add("cart-item");
+                        itemDiv.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                            <div class="cart-item-details">
+                                <h4>${item.name}</h4>
+                                <div class="quantity-controls">
+                                    <button class="minus-btn" data-index="${index}">-</button>
+                                    <span class="quantity">${item.quantity}</span>
+                                    <button class="plus-btn" data-index="${index}">+</button>
+                                    <button class="remove-item" data-index="${index}">🗑️</button>
+                                </div>
+                                <p class="item-price">SAR ${item.price * item.quantity}</p>
+                            </div>
+                        `;
+                        cartItemsContainer.appendChild(itemDiv);
+                        totalPrice += item.price * item.quantity;
+                    });
+                    totalPriceDisplay.textContent = totalPrice.toFixed(2);
+                }
+            }
+
+            // Adding item to the cart
             const exampleItem = {
                 name: "Handmade Pottery Vase",
                 price: 50,
                 quantity: 1,
                 image: "pottery_vase.jpg"
             };
-            cartItems.push(exampleItem);
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-            function renderCart() {
-                cartItemsContainer.innerHTML = "";
-                let totalPrice = 0;
-                cartItems.forEach((item, index) => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("cart-item");
-                    itemDiv.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-                        <div class="cart-item-details">
-                            <h4>${item.name}</h4>
-                            <div class="quantity-controls">
-                                <button class="minus-btn" data-index="${index}">-</button>
-                                <span class="quantity">${item.quantity}</span>
-                                <button class="plus-btn" data-index="${index}">+</button>
-                                <button class="remove-item" data-index="${index}">🗑️</button>
-                            </div>
-                            <p class="item-price">SAR ${item.price * item.quantity}</p>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemDiv);
-                    totalPrice += item.price * item.quantity;
-                });
-                totalPriceDisplay.textContent = totalPrice.toFixed(2);
+            if (cartItems.length === 0) {
+                localStorage.setItem("cartItems", JSON.stringify([exampleItem])); // Add one item for testing
             }
 
             cartItemsContainer.addEventListener("click", (e) => {
@@ -202,5 +218,9 @@
     </script>
 </body>
 </html>
+
+
+
+
 
 
