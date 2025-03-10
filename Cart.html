@@ -1,97 +1,143 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const cartContainer = document.querySelector(".cart-items");
-    const totalItems = document.getElementById("total-items");
-    const totalPrice = document.getElementById("total-price");
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Made - Shopping Cart</title>
+    <link rel="stylesheet" href="HomePageCSS.css">
+    <script src="cart.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
+            <h3 id="logo-title">Hand made</h3>
+        </div>
+        <div id="comHeader">
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home"></a>
+            <a href="cart.html"> <img src="cart-shopping-solid.svg" alt="Cart"></a>
+            <a href="profile.html"> <img src="user-solid.svg" alt="Profile"></a>
+            <a href="logout.html"> <img src="logout.svg" alt="Logout"></a>
+        </div>
+        <div id="comHeader1">
+            <a href="painting.html" class="categories">Painting</a>
+            <a href="pottery.html" class="categories">Pottery</a>
+            <a href="wood.html" class="categories">Wood Carving</a>
+            <a href="mirrors.html" class="categories">Mirrors</a>
+            <a href="chains.html" class="categories">Chains</a>
+        </div>
+    </header>
 
-    function updateCart() {
-        cartContainer.innerHTML = "";
-        let totalQuantity = 0;
-        let totalCost = 0;
+    <main id="CartMain">
+        <h2 id="titel">Shopping Cart</h2>
+        <div class="cart-container">
+            <div id="cartItemsContainer" class="cart-items">
+                <!-- Cart items dynamically added here -->
+            </div>
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <p>Total Items: <span id="total-items">0</span></p>
+                <p>Total Price: $<span id="total-price">0.00</span></p>
+                <button class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
+            </div>
+        </div>
+    </main>
 
-        if (cartItems.length === 0) {
-            cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-        } else {
-            cartItems.forEach((item, index) => {
-                let itemDiv = document.createElement("div");
-                itemDiv.classList.add("cart-item");
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us:</p>
+            <img src="twitter.webp" alt="Twitter Icon"> @HandMade
+            <img src="instagram.webp" alt="Instagram Icon"> @HandMade
+            <img src="email.png" alt="Email Icon"> HandMade@gmail.com
+        </div>
+        <div class="footer-right">
+            &copy; 2025 HandMade
+        </div>
+    </footer>
 
-                // Image element with fallback
-                let imgElement = document.createElement("img");
-                imgElement.alt = item.name;
-                imgElement.classList.add("cart-image");
-                loadImageWithFallback(imgElement, item.name);
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Cart page: Retrieve items from local storage
+            const cartItemsContainer = document.getElementById("cartItemsContainer");
+            const totalItemsDisplay = document.getElementById("total-items");
+            const totalPriceDisplay = document.getElementById("total-price");
+            const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-                itemDiv.innerHTML = `
-                    <h4>${item.name}</h4>
-                    <p>Price: $${item.price}</p>
-                    <div class="quantity-controls">
-                        <button class="minus-btn" onclick="updateQuantity(${index}, -1)">-</button>
-                        <span class="quantity">${item.quantity}</span>
-                        <button class="plus-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                        <button class="remove-item" onclick="removeItem(${index})">❌</button>
-                    </div>
-                    <p>Total: $${(item.price * item.quantity).toFixed(2)}</p>
-                `;
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+            } else {
+                let totalItems = 0;
+                let totalPrice = 0;
 
-                itemDiv.insertBefore(imgElement, itemDiv.firstChild);
-                cartContainer.appendChild(itemDiv);
+                cartItems.forEach(item => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("cart-item");
 
-                totalQuantity += item.quantity;
-                totalCost += item.price * item.quantity;
-            });
-        }
+                    itemDiv.innerHTML = `
+                        <h4>${item.name}</h4>
+                        <div class="quantity-controls">
+                            <button class="minus-btn">-</button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="plus-btn">+</button>
+                            <button class="remove-item">Remove</button>
+                        </div>
+                        <p class="total-price">Total Price: SAR ${item.price * item.quantity}</p>
+                    `;
 
-        totalItems.textContent = totalQuantity;
-        totalPrice.textContent = totalCost.toFixed(2);
-    }
+                    // Add the item to the cart
+                    cartItemsContainer.appendChild(itemDiv);
 
-    function updateQuantity(index, change) {
-        cartItems[index].quantity += change;
-        if (cartItems[index].quantity < 1) cartItems[index].quantity = 1;
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        updateCart();
-    }
+                    totalItems += item.quantity;
+                    totalPrice += item.price * item.quantity;
 
-    function removeItem(index) {
-        cartItems.splice(index, 1);
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        updateCart();
-    }
+                    // Handle Quantity change and Remove item
+                    const quantityDisplay = itemDiv.querySelector(".quantity");
+                    const minusBtn = itemDiv.querySelector(".minus-btn");
+                    const plusBtn = itemDiv.querySelector(".plus-btn");
+                    const removeItemBtn = itemDiv.querySelector(".remove-item");
 
-    document.querySelector(".checkout-btn").addEventListener("click", function () {
-        alert("Proceeding to checkout...");
-        // Redirect or handle checkout logic here
-    });
+                    // Decrease quantity
+                    minusBtn.addEventListener("click", () => {
+                        if (item.quantity > 1) {
+                            item.quantity--;
+                            quantityDisplay.textContent = item.quantity;
+                            updateCart();
+                        }
+                    });
 
-    function loadImageWithFallback(imgElement, itemName) {
-        const basePath = "images/";
-        const formattedName = itemName.toLowerCase();
-        const extensions = ["webp", "jpg", "jpeg", "png"];
+                    // Increase quantity
+                    plusBtn.addEventListener("click", () => {
+                        item.quantity++;
+                        quantityDisplay.textContent = item.quantity;
+                        updateCart();
+                    });
 
-        for (const ext of extensions) {
-            const imagePath = `${basePath}${formattedName}.${ext}`;
-            checkImage(imagePath).then((imageExists) => {
-                if (imageExists) {
-                    imgElement.src = imagePath;
-                } else {
-                    imgElement.src = `${basePath}placeholder.png`; // Fallback image
-                }
-            });
-        }
-    }
+                    // Remove item
+                    removeItemBtn.addEventListener("click", () => {
+                        const index = cartItems.indexOf(item);
+                        if (index > -1) {
+                            cartItems.splice(index, 1);
+                            updateCart();
+                            itemDiv.remove();
+                        }
+                    });
+                });
 
-    function checkImage(url) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.src = url;
-            img.onload = () => resolve(true);
-            img.onerror = () => resolve(false);
+                totalItemsDisplay.textContent = totalItems;
+                totalPriceDisplay.textContent = totalPrice.toFixed(2);
+            }
+
+            // Update the cart in local storage
+            function updateCart() {
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                location.reload();
+            }
         });
-    }
+    </script>
+</body>
+</html>
 
-    updateCart();
-});
+
 
         
 
