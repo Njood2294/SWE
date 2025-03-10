@@ -29,6 +29,7 @@
 
     </header>
     <style>
+     
         body {
             font-family: Arial, sans-serif;
             background-color: #EDD8E2;
@@ -45,20 +46,20 @@
         }
 
         .product-card {
-            margin-top: 20%;
             background: white;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: auto;  /* Allows dynamic width */
+            width: auto;
             max-width: 300px;
+            margin-top: 20%;
         }
 
         .product-image {
             width: 100%;
             border-radius: 10px;
-            height: auto; 
+            height: auto;
         }
 
         .product-title {
@@ -86,6 +87,33 @@
 
         .add-to-cart:hover {
             background: darkred;
+        }
+
+        .cart-message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .error-message {
+            display: none;
+            background-color: #FF6347;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        #total-price {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
