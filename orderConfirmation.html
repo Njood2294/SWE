@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Made - Order Confirmation</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3d6dd;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            background-color: #d77a8b;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Order Confirmation Container */
+        .order-container {
+            width: 50%;
+            background-color: white;
+            padding: 20px;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Order Item Styling */
+        .order-items {
+            text-align: left;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .order-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            margin-right: 15px;
+        }
+
+        .order-summary {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .home-btn {
+            background-color: #d77a8b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background-color: #b85f72;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Order Confirmation</header>
+
+    <div class="order-container">
+        <h2>Thank You! Your Order is Confirmed 🎉</h2>
+        <p>Your order has been successfully placed.</p>
+
+        <div id="orderItemsContainer" class="order-items">
+            <!-- Ordered items dynamically added here -->
+        </div>
+        
+        <div class="order-summary">
+            <p>Total Paid: SAR <span id="total-price">0.00</span></p>
+        </div>
+
+        <button onclick="window.location.href='index.html'" class="home-btn">Return to Home</button>
+    </div>
+
+    <footer>
+        &copy; 2024 Hand Made. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const orderItemsContainer = document.getElementById("orderItemsContainer");
+            const totalPriceDisplay = document.getElementById("total-price");
+
+            let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            let totalPrice = 0;
+
+            if (cartItems.length === 0) {
+                orderItemsContainer.innerHTML = "<p>No items found. Please return to the shop.</p>";
+            } else {
+                cartItems.forEach(item => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.classList.add("order-item");
+                    itemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>SAR ${item.price * item.quantity}</p>
+                        </div>
+                        <div>
+                            <p>Quantity: ${item.quantity}</p>
+                        </div>
+                    `;
+                    orderItemsContainer.appendChild(itemDiv);
+                    totalPrice += item.price * item.quantity;
+                });
+            }
+
+            totalPriceDisplay.textContent = totalPrice.toFixed(2);
+
+            // Clear cart after confirmation
+            localStorage.removeItem("cartItems");
+        });
+    </script>
+
+</body>
+</html>
+
