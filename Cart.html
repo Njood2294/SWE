@@ -3,141 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hand Made - Shopping Cart</title>
-    <link rel="stylesheet" href="HomePageCSS.css">
-    <script src="cart.js" defer></script>
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #EDD8E2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+        }
+
+        .cart-item-price {
+            color: #333;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo-title">
-            <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
-            <h3 id="logo-title">Hand made</h3>
-        </div>
-        <div id="comHeader">
-            <a href="HomePage.html"> <img src="Home.svg" alt="Home"></a>
-            <a href="cart.html"> <img src="cart-shopping-solid.svg" alt="Cart"></a>
-            <a href="profile.html"> <img src="user-solid.svg" alt="Profile"></a>
-            <a href="logout.html"> <img src="logout.svg" alt="Logout"></a>
-        </div>
-        <div id="comHeader1">
-            <a href="painting.html" class="categories">Painting</a>
-            <a href="pottery.html" class="categories">Pottery</a>
-            <a href="wood.html" class="categories">Wood Carving</a>
-            <a href="mirrors.html" class="categories">Mirrors</a>
-            <a href="chains.html" class="categories">Chains</a>
-        </div>
-    </header>
 
-    <main id="CartMain">
-        <h2 id="titel">Shopping Cart</h2>
-        <div class="cart-container">
-            <div id="cartItemsContainer" class="cart-items">
-                <!-- Cart items dynamically added here -->
-            </div>
-            <div class="cart-summary">
-                <h3>Order Summary</h3>
-                <p>Total Items: <span id="total-items">0</span></p>
-                <p>Total Price: $<span id="total-price">0.00</span></p>
-                <button class="checkout-btn" onclick="window.location.href='checkout.html'">Proceed to Checkout</button>
-            </div>
-        </div>
-    </main>
+<div class="cart-container">
+    <h2>Your Cart</h2>
+    <div id="cart-items">
+        <!-- Cart items will be displayed here -->
+    </div>
+    <div id="cart-total" class="cart-total">
+        Total: <span id="total-price">0 SAR</span>
+    </div>
+</div>
 
-    <footer>
-        <div class="footer-left">
-            <p>Contact Us:</p>
-            <img src="twitter.webp" alt="Twitter Icon"> @HandMade
-            <img src="instagram.webp" alt="Instagram Icon"> @HandMade
-            <img src="email.png" alt="Email Icon"> HandMade@gmail.com
-        </div>
-        <div class="footer-right">
-            &copy; 2025 HandMade
-        </div>
-    </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.getElementById('cart-items');
+        const totalPriceElement = document.getElementById('total-price');
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Cart page: Retrieve items from local storage
-            const cartItemsContainer = document.getElementById("cartItemsContainer");
-            const totalItemsDisplay = document.getElementById("total-items");
-            const totalPriceDisplay = document.getElementById("total-price");
-            const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+        } else {
+            let totalPrice = 0;
+            cart.forEach(item => {
+                const cartItemElement = document.createElement('div');
+                cartItemElement.classList.add('cart-item');
+                cartItemElement.innerHTML = `
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-price">${item.price} SAR</span>
+                `;
+                cartItemsContainer.appendChild(cartItemElement);
+                totalPrice += item.price;
+            });
+            totalPriceElement.textContent = `${totalPrice} SAR`;
+        }
+    });
+</script>
 
-            if (cartItems.length === 0) {
-                cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-            } else {
-                let totalItems = 0;
-                let totalPrice = 0;
-
-                cartItems.forEach(item => {
-                    const itemDiv = document.createElement("div");
-                    itemDiv.classList.add("cart-item");
-
-                    itemDiv.innerHTML = `
-                        <h4>${item.name}</h4>
-                        <div class="quantity-controls">
-                            <button class="minus-btn">-</button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="plus-btn">+</button>
-                            <button class="remove-item">Remove</button>
-                        </div>
-                        <p class="total-price">Total Price: SAR ${item.price * item.quantity}</p>
-                    `;
-
-                    // Add the item to the cart
-                    cartItemsContainer.appendChild(itemDiv);
-
-                    totalItems += item.quantity;
-                    totalPrice += item.price * item.quantity;
-
-                    // Handle Quantity change and Remove item
-                    const quantityDisplay = itemDiv.querySelector(".quantity");
-                    const minusBtn = itemDiv.querySelector(".minus-btn");
-                    const plusBtn = itemDiv.querySelector(".plus-btn");
-                    const removeItemBtn = itemDiv.querySelector(".remove-item");
-
-                    // Decrease quantity
-                    minusBtn.addEventListener("click", () => {
-                        if (item.quantity > 1) {
-                            item.quantity--;
-                            quantityDisplay.textContent = item.quantity;
-                            updateCart();
-                        }
-                    });
-
-                    // Increase quantity
-                    plusBtn.addEventListener("click", () => {
-                        item.quantity++;
-                        quantityDisplay.textContent = item.quantity;
-                        updateCart();
-                    });
-
-                    // Remove item
-                    removeItemBtn.addEventListener("click", () => {
-                        const index = cartItems.indexOf(item);
-                        if (index > -1) {
-                            cartItems.splice(index, 1);
-                            updateCart();
-                            itemDiv.remove();
-                        }
-                    });
-                });
-
-                totalItemsDisplay.textContent = totalItems;
-                totalPriceDisplay.textContent = totalPrice.toFixed(2);
-            }
-
-            // Update the cart in local storage
-            function updateCart() {
-                localStorage.setItem("cartItems", JSON.stringify(cartItems));
-                location.reload();
-            }
-        });
-    </script>
 </body>
 </html>
-
-
-
-        
-

@@ -15,7 +15,6 @@
            <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
            <a> <img src="user-solid.svg" alt="profile"></a>
            <a> <img src="logout.svg" alt="logout" ></a>
-          
         </div>
         <div id="comHeader1">
             <a href="painting.html" class="categories">Painting</a>
@@ -24,11 +23,8 @@
             <a href="mirrors.html" class="categories">Mirrors</a>
             <a href="chains.html" class="categories">Chains</a>
         </div>
-        
-
-
-
     </header>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,40 +80,58 @@
         .add-to-cart:hover {
             background: darkred;
         }
+
+        #message {
+            display: none;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        #success {
+            color: green;
+        }
+
+        #error {
+            color: red;
+        }
     </style>
 </head>
+
 <body>
 
-    <div class="product-container">
-        <div class="product-card">
-            <img src="mirror2.png" alt="Product 1" class="product-image">
-            <div class="product-title">Mirror Box For 2</div>
-            <div class="product-price">120 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
-
-        <div class="product-card">
-            <img src="mirror1.png" alt="Product 2" class="product-image">
-            <div class="product-title">Mirror Box For 1</div>
-            <div class="product-price">80 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
-
-        <div class="product-card">
-            <img src="mirroespecial.png" alt="Product 3" class="product-image">
-            <div class="product-title">Mirror Box - Celebration Edition</div>
-            <div class="product-price">150 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
-
-        <div class="product-card">
-            <img src="mirrorsticker.png" alt="Product 4" class="product-image">
-            <div class="product-title">Mirror Stickers 1 Sheet</div>
-            <div class="product-price">10 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
+<div class="product-container">
+    <div class="product-card">
+        <img src="mirror2.png" alt="Product 1" class="product-image">
+        <div class="product-title">Mirror Box For 2</div>
+        <div class="product-price">120 SAR</div>
+        <button class="add-to-cart" data-product="1" data-name="Mirror Box For 2" data-price="120" data-stock="5">Add to cart</button>
     </div>
-</main>
+    <div class="product-card">
+        <img src="mirror1.png" alt="Product 2" class="product-image">
+        <div class="product-title">Mirror Box For 1</div>
+        <div class="product-price">80 SAR</div>
+        <button class="add-to-cart" data-product="2" data-name="Mirror Box For 1" data-price="80" data-stock="0">Add to cart</button>
+    </div>
+    <div class="product-card">
+        <img src="mirroespecial.png" alt="Product 3" class="product-image">
+        <div class="product-title">Mirror Box - Celebration Edition</div>
+        <div class="product-price">150 SAR</div>
+        <button class="add-to-cart" data-product="3" data-name="Mirror Box - Celebration Edition" data-price="150" data-stock="2">Add to cart</button>
+    </div>
+    <div class="product-card">
+        <img src="mirrorsticker.png" alt="Product 4" class="product-image">
+        <div class="product-title">Mirror Stickers 1 Sheet</div>
+        <div class="product-price">10 SAR</div>
+        <button class="add-to-cart" data-product="4" data-name="Mirror Stickers 1 Sheet" data-price="10" data-stock="10">Add to cart</button>
+    </div>
+</div>
+
+<div id="message">
+    <p id="success">Item added to cart successfully!</p>
+    <p id="error">Sorry, this item is out of stock!</p>
+</div>
+
 <footer>
     <div class="footer-left">
         <p>Contact Us:</p>
@@ -130,5 +144,42 @@
     </div>
 </footer>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Handle adding items to the cart
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const message = document.getElementById('message');
+        const successMessage = document.getElementById('success');
+        const errorMessage = document.getElementById('error');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productName = button.getAttribute('data-name');
+                const productPrice = parseFloat(button.getAttribute('data-price'));
+                const productStock = parseInt(button.getAttribute('data-stock'));
+                
+                // Check if the product is available
+                if (productStock > 0) {
+                    cart.push({ name: productName, price: productPrice, quantity: 1 });
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    successMessage.style.display = 'block';
+                    errorMessage.style.display = 'none';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                } else {
+                    errorMessage.style.display = 'block';
+                    successMessage.style.display = 'none';
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            });
+        });
+    });
+</script>
+
 </body>
-</html>
+</html> 
