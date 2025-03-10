@@ -114,7 +114,7 @@
             const orderItemsContainer = document.getElementById("orderItemsContainer");
             const totalPriceDisplay = document.getElementById("total-price");
 
-            let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
             let totalPrice = 0;
 
             if (cartItems.length === 0) {
@@ -141,10 +141,11 @@
             totalPriceDisplay.textContent = totalPrice.toFixed(2);
 
             // Clear cart after confirmation
-            localStorage.removeItem("cartItems");
+            localStorage.removeItem("cart");
         });
     </script>
 
 </body>
 </html>
+
 
