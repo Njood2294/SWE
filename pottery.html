@@ -120,28 +120,27 @@
             <img src="pottery1.png" alt="Product 1" class="product-image">
             <div class="product-title">pottery box with paint</div>
             <div class="product-price">120 SAR</div>
-            <button class="add-to-cart" data-id="1" data-name="pottery box with paint" data-price="120" data-stock="10">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>         </div>
 
         <div class="product-card">
             <img src="pottery2.jpg" alt="Product 2" class="product-image">
             <div class="product-title">pottery box without paint</div>
             <div class="product-price">90 SAR</div>
-            <button class="add-to-cart" data-id="2" data-name="pottery box without paint" data-price="90" data-stock="5">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>         </div>
 
         <div class="product-card">
             <img src="potteryclay.jpg" alt="Product 3" class="product-image">
             <div class="product-title">white clay</div>
             <div class="product-price">40 SAR</div>
-            <button class="add-to-cart" data-id="3" data-name="white clay" data-price="40" data-stock="20">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>        
         </div>
+
     </div>
 
-    <div id="message">
-        <p id="success">Item added to cart successfully!</p>
-        <p id="error">Sorry, this item is out of stock!</p>
-    </div>
+   
 
     <footer>
         <div class="footer-left">
