@@ -148,7 +148,7 @@
             const totalPriceDisplay = document.getElementById("total-price");
             const emptyCartBtn = document.getElementById("emptyCart");
             const emptyMessage = document.getElementById("empty-message");
-            const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
 
             function renderCart() {
                 cartItemsContainer.innerHTML = "";
@@ -181,18 +181,6 @@
                 }
             }
 
-            // Adding item to the cart
-            const exampleItem = {
-                name: "Handmade Pottery Vase",
-                price: 50,
-                quantity: 1,
-                image: "pottery_vase.jpg"
-            };
-
-            if (cartItems.length === 0) {
-                localStorage.setItem("cartItems", JSON.stringify([exampleItem])); // Add one item for testing
-            }
-
             cartItemsContainer.addEventListener("click", (e) => {
                 const index = e.target.dataset.index;
                 if (e.target.classList.contains("plus-btn")) {
@@ -218,9 +206,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
