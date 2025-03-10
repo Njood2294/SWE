@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Grid</title>
+    <link rel="stylesheet" href="HomePageCSS.css"> 
     <header>
-        <link rel="stylesheet" href="HomePageCSS.css"> 
         <div class="logo-title">
             <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
             <h3 id="logo-title">Hand made</h3>
         </div>
         <div id="comHeader">
             <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
-           <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
-          <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
-           <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
-          
+            <a href="Cart.html" id="cart-link"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
+            <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
+            <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
         </div>
         <div id="comHeader1">
             <a href="paintingkit.html" class="categories">painting</a>
@@ -24,9 +23,6 @@
             <a href="mirror.html" class="categories">Mirrors</a>
             <a href="charms.html" class="categories">Chains</a>
         </div>
-
-
-
     </header>
     <style>
         body {
@@ -45,14 +41,14 @@
         }
 
         .product-card {
-            margin-top: 20%; 
             background: white;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: auto;  /* Allows dynamic width */
+            width: auto;  
             max-width: 300px;
+            margin-top: 20%;
         }
 
         .product-image {
@@ -87,91 +83,114 @@
         .add-to-cart:hover {
             background: darkred;
         }
+
+        .cart-message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Style for the total price */
+        #total-price {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div class="product-container">
+        <!-- Existing products -->
         <div class="product-card">
             <img src="necklasebase.JPG" alt="Product 1" class="product-image">
-            <div class="product-title">necklase base</div>
+            <div class="product-title">Necklace base</div>
             <div class="product-price">100 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
-
-
 
         <div class="product-card">
             <img src="brasletebase.png" alt="Product 2" class="product-image">
-            <div class="product-title">bracelet base</div>
+            <div class="product-title">Bracelet base</div>
             <div class="product-price">100 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
-        
-
-        
         <div class="product-card">
             <img src="earringbase.JPG" alt="Product 3" class="product-image">
-            <div class="product-title">earrings base</div>
+            <div class="product-title">Earrings base</div>
             <div class="product-price">100 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="lettercharm.png" alt="Product 3" class="product-image">
-            <div class="product-title">letter charms</div>
+            <img src="lettercharm.png" alt="Product 4" class="product-image">
+            <div class="product-title">Letter charms</div>
             <div class="product-price">50 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="numbercharm.png" alt="Product 3" class="product-image">
-            <div class="product-title">number charms</div>
+            <img src="numbercharm.png" alt="Product 5" class="product-image">
+            <div class="product-title">Number charms</div>
             <div class="product-price">50 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="heartcharm.png" alt="Product 3" class="product-image">
-            <div class="product-title">heart charms</div>
+            <img src="heartcharm.png" alt="Product 6" class="product-image">
+            <div class="product-title">Heart charms</div>
             <div class="product-price">20 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
-        <div class="product-card">
-            <img src="star1charm.png" alt="Product 3" class="product-image">
-            <div class="product-title">stud star charms</div>
-            <div class="product-price">20 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="star2charm.png" alt="Product 3" class="product-image">
-            <div class="product-title">jewels star charms</div>
+            <img src="star1charm.png" alt="Product 7" class="product-image">
+            <div class="product-title">Stud star charms</div>
             <div class="product-price">20 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="star3charm.png" alt="Product 3" class="product-image">
-            <div class="product-title">sparkle charms</div>
+            <img src="star2charm.png" alt="Product 8" class="product-image">
+            <div class="product-title">Jewels star charms</div>
             <div class="product-price">20 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
         <div class="product-card">
-            <img src="palmcharm.png" alt="Product 3" class="product-image">
-            <div class="product-title">palm charms</div>
+            <img src="star3charm.png" alt="Product 9" class="product-image">
+            <div class="product-title">Sparkle charms</div>
             <div class="product-price">20 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
         </div>
 
-
-
-        
-      
-        
+        <div class="product-card">
+            <img src="palmcharm.png" alt="Product 10" class="product-image">
+            <div class="product-title">Palm charms</div>
+            <div class="product-price">20 SAR</div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
+        </div>
     </div>
+
+    <!-- Display Total Price -->
+    <div id="total-price">Total Price: SAR 0.00</div>
+
     <footer>
         <div class="footer-left">
             <p>Contact Us:</p>
@@ -184,5 +203,67 @@
         </div>
     </footer>
 
+    <script>
+        // Update the total price based on the cart
+        function updateTotalPrice() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let totalPrice = 0;
+
+            // حساب المجموع الكلي بناءً على الكمية
+            cart.forEach(item => {
+                totalPrice += item.priceNumber * item.quantity; // ضرب السعر في الكمية
+            });
+
+            // تحديث المجموع الكلي في الصفحة
+            const totalPriceElement = document.getElementById('total-price');
+            if (totalPriceElement) {
+                totalPriceElement.innerText = `Total Price: SAR ${totalPrice.toFixed(2)}`;
+            }
+        }
+
+        // Add item to cart
+        function addToCart(button) {
+            const productTitle = button.parentElement.querySelector('.product-title').innerText;
+            const productPrice = button.parentElement.querySelector('.product-price').innerText;
+            const productImage = button.parentElement.querySelector('.product-image').src;
+            const cartMessage = button.parentElement.querySelector('.cart-message');
+
+            const priceNumber = parseFloat(productPrice.replace(' SAR', '').trim());
+
+            // إنشاء كائن يحتوي على جميع تفاصيل المنتج
+            const item = {
+                title: productTitle,
+                price: productPrice,
+                priceNumber: priceNumber, 
+                image: productImage, 
+                quantity: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // التحقق إذا كان المنتج موجودًا بالفعل في السلة
+            const existingItem = cart.find(product => product.title === item.title);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(item);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            cartMessage.style.display = 'block';
+            setTimeout(() => {
+                cartMessage.style.display = 'none';
+            }, 2000);
+
+            updateTotalPrice(); // تحديث المجموع الكلي عند إضافة المنتج
+        }
+
+        // عند تحميل الصفحة، يتم تحديث المجموع الكلي
+        window.onload = updateTotalPrice;
+    </script>
 </body>
 </html>
+
+
+
