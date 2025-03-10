@@ -29,7 +29,6 @@
 
     </header>
     <style>
-     
         body {
             font-family: Arial, sans-serif;
             background-color: #EDD8E2;
@@ -124,15 +123,17 @@
             <img src="paintingkit1.png" alt="Product 1" class="product-image">
             <div class="product-title">painting on kanvas for one person</div>
             <div class="product-price">100 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
+                </div>
 
         <div class="product-card">
             <img src="paintingkit2.png" alt="Product 2" class="product-image">
             <div class="product-title">painting on kanvas for two person</div>
             <div class="product-price">150 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
+                </div>
 
         
 
@@ -141,18 +142,18 @@
             <img src="paintingkit5.png" alt="Product 3" class="product-image">
             <div class="product-title">painting on pen holder kit</div>
             <div class="product-price">120 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
+                </div>
 
         <div class="product-card">
             <img src="colorsextra.png" alt="Product 3" class="product-image">
             <div class="product-title">extra colors</div>
             <div class="product-price">80 SAR</div>
-            <button class="add-to-cart">Add to cart</button>
-        </div>
+            <button class="add-to-cart" onclick="addToCart(this)">Add to cart</button>
+            <div class="cart-message">Item added to cart!</div>
+                </div>
 
-        
-      
         
     </div>
     <footer>
@@ -185,12 +186,14 @@
                     let cart = JSON.parse(localStorage.getItem('cart')) || [];
                     const id = productCard.querySelector('.product-title').textContent;
                     const price = parseFloat(productCard.querySelector('.product-price').textContent.split(' ')[0]);
+                    const imageSrc = productCard.querySelector('img').src; // جلب رابط الصورة
+
 
                     let item = cart.find(item => item.name === id);
                     if (item) {
-                        item.quantity += 1;
+                     item.quantity += 1;
                     } else {
-                        cart.push({ name: id, price: price, quantity: 1 });
+                      cart.push({ name: id, price: price, image: imageSrc, quantity: 1 });
                     }
 
                     localStorage.setItem('cart', JSON.stringify(cart));
