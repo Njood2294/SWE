@@ -12,7 +12,7 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                background-color: #EDD8E2;;
+                background-color: #EDD8E2;
                 margin: 0;
                 padding: 0;
                 text-align: center;
@@ -116,11 +116,11 @@
             function renderCart() {
                 cartItemsContainer.innerHTML = "";
                 let totalPrice = 0;
-                
+
                 cartItems.forEach((item, index) => {
                     const itemDiv = document.createElement("div");
                     itemDiv.classList.add("cart-item");
-                    itemDiv.innerHTML = 
+                    itemDiv.innerHTML = `
                         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                         <div class="cart-item-details">
                             <h4>${item.name}</h4>
@@ -132,10 +132,11 @@
                             </div>
                             <p class="item-price">SAR ${item.price * item.quantity}</p>
                         </div>
-                    ;
+                    `;
                     cartItemsContainer.appendChild(itemDiv);
                     totalPrice += item.price * item.quantity;
                 });
+
                 totalPriceDisplay.textContent = totalPrice.toFixed(2);
             }
 
