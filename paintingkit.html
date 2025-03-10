@@ -11,11 +11,12 @@
             <h3 id="logo-title">Hand made</h3>
         </div>
         <div id="comHeader">
-            <a href="HomePage.html"> <img src="Home.svg" alt="Home"></a>
-            <a href="Cart.html" id="cart-link"> <img src="cart-shopping-solid.svg" alt="cart"></a>
-            <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
-            <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout"></a>
-        </div>
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
+           <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
+          <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
+           <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
+          
+         </div>
         <div id="comHeader1">
             <a href="paintingkit.html" class="categories">painting</a>
             <a href="pottery.html" class="categories">pottery</a>
@@ -23,6 +24,9 @@
             <a href="mirror.html" class="categories">Mirrors</a>
             <a href="charms.html" class="categories">Chains</a>
         </div>
+
+
+
     </header>
     <style>
         body {
@@ -47,15 +51,14 @@
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: auto;
+            width: auto;  /* Allows dynamic width */
             max-width: 300px;
         }
 
         .product-image {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
             border-radius: 10px;
+            height: auto; 
         }
 
         .product-title {
@@ -84,22 +87,6 @@
         .add-to-cart:hover {
             background: darkred;
         }
-
-        #message {
-            display: none;
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        #success {
-            color: green;
-        }
-
-        #error {
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -107,38 +94,39 @@
     <div class="product-container">
         <div class="product-card">
             <img src="paintingkit1.png" alt="Product 1" class="product-image">
-            <div class="product-title">Painting on canvas for one person</div>
+            <div class="product-title">painting on kanvas for one person</div>
             <div class="product-price">100 SAR</div>
-            <button class="add-to-cart" data-id="1" data-name="Painting on canvas for one person" data-price="100" data-stock="5">Add to cart</button>
+            <button class="add-to-cart">Add to cart</button>
         </div>
 
         <div class="product-card">
             <img src="paintingkit2.png" alt="Product 2" class="product-image">
-            <div class="product-title">Painting on canvas for two people</div>
+            <div class="product-title">painting on kanvas for two person</div>
             <div class="product-price">150 SAR</div>
-            <button class="add-to-cart" data-id="2" data-name="Painting on canvas for two people" data-price="150" data-stock="3">Add to cart</button>
+            <button class="add-to-cart">Add to cart</button>
         </div>
 
+        
+
+        
         <div class="product-card">
             <img src="paintingkit5.png" alt="Product 3" class="product-image">
-            <div class="product-title">Painting on pen holder kit</div>
+            <div class="product-title">painting on pen holder kit</div>
             <div class="product-price">120 SAR</div>
-            <button class="add-to-cart" data-id="3" data-name="Painting on pen holder kit" data-price="120" data-stock="10">Add to cart</button>
+            <button class="add-to-cart">Add to cart</button>
         </div>
 
         <div class="product-card">
-            <img src="colorsextra.png" alt="Product 4" class="product-image">
-            <div class="product-title">Extra colors</div>
+            <img src="colorsextra.png" alt="Product 3" class="product-image">
+            <div class="product-title">extra colors</div>
             <div class="product-price">80 SAR</div>
-            <button class="add-to-cart" data-id="4" data-name="Extra colors" data-price="80" data-stock="8">Add to cart</button>
+            <button class="add-to-cart">Add to cart</button>
         </div>
-    </div>
 
-    <div id="message">
-        <p id="success">Item added to cart successfully!</p>
-        <p id="error">Sorry, this item is out of stock!</p>
+        
+      
+        
     </div>
-
     <footer>
         <div class="footer-left">
             <p>Contact Us:</p>
@@ -150,47 +138,6 @@
             &copy; 2025 HandMade
         </div>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = button.getAttribute('data-id');
-                    const name = button.getAttribute('data-name');
-                    const price = parseFloat(button.getAttribute('data-price'));
-                    const stock = parseInt(button.getAttribute('data-stock'));
-
-                    let item = cart.find(item => item.id === id);
-                    if (stock > 0) {
-                        if (item) {
-                            item.quantity += 1;
-                        } else {
-                            cart.push({ id, name, price, quantity: 1 });
-                        }
-
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                        // Show success message
-                        document.getElementById("message").style.display = "block";
-                        document.getElementById("success").style.display = "block";
-                        document.getElementById("error").style.display = "none";
-                    } else {
-                        // Show error message
-                        document.getElementById("message").style.display = "block";
-                        document.getElementById("success").style.display = "none";
-                        document.getElementById("error").style.display = "block";
-                    }
-                });
-            });
-
-            // Handle the redirection to the cart when clicking the cart icon
-            document.getElementById('cart-link').addEventListener('click', function () {
-                window.location.href = "Cart.html";
-            });
-        });
-    </script>
 
 </body>
 </html>
