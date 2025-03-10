@@ -94,8 +94,15 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Create a password" required>
             </div>
-            <button type="submit" class="btn">Sign Up</button>
+            <button type="submit" class="btn" onclick="h(event)">Sign Up</button>
         </form>
+        <script>
+            function h(event) {
+                event.preventDefault(); // Prevents form submission (if inside a form)
+                window.location.href = "../HomePage.html"; // Redirects to the homepage
+            }
+        </script>
+
         <p class="login-link">Already have an account? <a href="login.html">Log in</a></p>
     </div>
 </body>
