@@ -1,227 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wide Marketplace</title>
-    <link rel="stylesheet" href="styles.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <title>Cart - Hand Made</title>
+    <link rel="stylesheet" href="HomePageCSS.css"> 
+    <script src="cart.js"></script>
 </head>
-
 <body>
     <header>
-        <div class="header">
-            <div class="logo-section">
-                <div class="horizontal-line"></div>
-                <div class="logo">
-                    <a href="index.html">
-                        <img src="images/wide-logo.png" alt="Wide Marketplace Logo" id="logo">
-                    </a>
-             
-                </div>
-                <div class="horizontal-line"></div>
-            </div>
+        <div class="logo-title">
+            <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
+            <h3 id="logo-title">Hand made</h3>
         </div>
-    
-        <!-- Links Section (Icons on the left, Navigation on the right) -->
-        
-        <nav class="link-section">
-            <!-- Left section (Icons: Cart, Seller, User) -->
-            <div class="icons">
-              <a href="cart.html">
-        <img src="images/cart.png" alt="Cart">
-        <p>Cart</p>
-       </a>
-    
-         <a href="sellerPage.html">
-        <img src="images/user.png" alt="Seller">
-        <p>Seller</p>
-         </a>
-    
-        <a href="userPage.html">
-        <img src="images/user.png" alt="User">
-        <p>User</p>
-         </a>
-    
-            </div>
-    
-            <!-- Right section (Navigation Links) -->
-         <div class="nav-links">
-          <ul> 
-            <li><a href="electronics.html">ELECTRONICS</a> </li>
-            <li><a href="toys.html">TOYS</a> </li>
-            <li> <a href="food.html">FOOD</a></li>     
-          </ul> 
-         </div>
-        </nav>
-
-
+        <div id="comHeader">
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home"></a>
+            <a href="cart.html"> <img src="cart-shopping-solid.svg" alt="Cart"></a>
+            <a href="profile.html"> <img src="user-solid.svg" alt="Profile"></a>
+            <a href="logout.html"> <img src="logout.svg" alt="Logout"></a>
+        </div>
+        <div id="comHeader1">
+            <a href="painting.html" class="categories">Painting</a>
+            <a href="pottery.html" class="categories">Pottery</a>
+            <a href="wood.html" class="categories">Wood Carving</a>
+            <a href="mirrors.html" class="categories">Mirrors</a>
+            <a href="chains.html" class="categories">Chains</a>
+        </div>
     </header>
 
-         <main>
-
-            <br><br>
-            <div class="path">
-                <a href="index.html">Home page</a> ➔ <a href="cart.html">Cart page</a>
-                <div class="path-line"></div>
+    <main id="CartMain">
+        <h2 id="titel">Shopping Cart</h2>
+        <div class="cart-container">
+            <div class="cart-items">
+                <!-- Cart items dynamically added here -->
             </div>
-
-        
-
-         <!-- cart -->
-
-         <div class="cart">
-            <div class="cart-header">
-                <input class="empty-cart" type="button" name="emptyCart" value="Empty Cart" onclick="emptyCart()">
+            <div class="cart-summary">
+                <h3>Order Summary</h3>
+                <p>Total Items: <span id="total-items">0</span></p>
+                <p>Total Price: $<span id="total-price">0.00</span></p>
+                <button class="checkout-btn">Proceed to Checkout</button>
             </div>
-        
-            <div id="cartItemsContainer" class="cart-item"> </div>
-
-    
-
-        <div class="cart-footer">
-            <input class="checkOutButton" type="button" name="checkout" value="checkout" onclick="window.location.href='acknowledgment.html'">
-
-         </div>
-
         </div>
+    </main>
 
-        </main>
-
-
-         <footer>
-            <div class="footer-section">
-              <img src="images/wide-logo.png" alt="Logo" width="118">
-              <p>Your Future of Shopping Starts Wide.</p>
-            </div>
-            <div class="footer-section social-media">
-              <h3>SOCIAL MEDIA</h3>
-              <ul class="social-icons">
-                <li><a href="#"><img src="images/twitter.png" alt="Twitter"></a></li>
-                <li><a href="#"><img src="images/facebook.png" alt="Facebook"></a></li>
-                <li><a href="#"><img src="images/insta.png" alt="Instagram"></a></li>
-                <li>@official_wide</li>
-                    </ul>
-                </div>
-                <div class="footer-section contact-us">
-                    <h3>CONTACT US</h3>
-                    <ul>
-                        <li><a href="#"><img src="images/phone1.png" alt="Phone"> +123 165 788</a></li>
-                        <li><a href="mailto:@wide@gmail.com"><img src="images/email1.png" alt="Email"> wide@gmail.com</a></li>
-              </ul>
-              
-            </div>
-            
-          </footer>
-           <div class="bottom-bar">
-                      <p>  Terms and Conditions<br>
-          privacy policy<br>&copy; 2024 wide company . All rights reserved</p>
-                  </div>
-
-                  <script>
-
-                function emptyCart() {
-                localStorage.removeItem("cartItems");
-                location.reload();
-                }
-
-                document.addEventListener("DOMContentLoaded", function() {
-    const cartItemsContainer = document.getElementById("cartItemsContainer");
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-    if (cartItems.length === 0) {
-        cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
-    } else {
-        cartItems.forEach(item => {
-            const itemDiv = document.createElement("div");
-            itemDiv.className = "cart-item";
-
-            // Create an image element with fallback extensions
-            const imgElement = document.createElement("img");
-            imgElement.alt = item.name;
-            imgElement.className = "cart-image";
-            loadImageWithFallback(imgElement, item.name);
-
-            itemDiv.innerHTML = `
-                <div class="cart-details">
-                    <h4>${item.name}</h4>
-                    <div class="quantity-controls">
-                        <button class="minus-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
-                        <span class="quantity">${item.quantity}</span>
-                        <button class="plus-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
-                        <button class="remove-item" onclick="removeItem('${item.name}')">
-                            <img src="images/bin.png" alt="Remove Item">
-                        </button>
-                    </div>
-                    <p class="total-price">Total Price: SAR ${item.price * item.quantity}</p>
-                </div>
-            `;
-
-            itemDiv.insertBefore(imgElement, itemDiv.firstChild);
-            cartItemsContainer.appendChild(itemDiv);
-        });
-    }
-});
-
-// Function to load image with fallback extensions
-async function loadImageWithFallback(imgElement, itemName) {
-    const basePath = "images/";
-    const formattedName = itemName.toLowerCase();
-    const extensions = ["webp", "jpg", "jpeg", "png"]; // Possible extensions
-
-    for (const ext of extensions) {
-        const imagePath = `${basePath}${formattedName}.${ext}`;
-        const imageLoaded = await checkImage(imagePath);
-        if (imageLoaded) {
-            imgElement.src = imagePath;
-            return;
-        }
-    }
-    // Fallback to a placeholder if none of the extensions work
-    imgElement.src = `${basePath}placeholder_image.png`;
-}
-
-// Function to check if image exists asynchronously
-function checkImage(url) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.src = url;
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-    });
-}
-
-function updateQuantity(name, change) {
-    let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const itemIndex = cartItems.findIndex(item => item.name === name);
-
-    if (itemIndex !== -1) {
-        cartItems[itemIndex].quantity += change;
-        if (cartItems[itemIndex].quantity < 1) cartItems[itemIndex].quantity = 1;
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        location.reload();
-    }
-}
-
-        function removeItem(name) {
-            let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-            cartItems = cartItems.filter(item => item.name !== name);
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            location.reload();
-        }
-
-        function emptyCart() {
-            localStorage.removeItem("cartItems");
-            location.reload();
-        }
-
-    
-                
-    </script>
-
-
-        
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us:</p>
+            <img src="twitter.webp" alt="Twitter Icon"> @HandMade
+            <img src="instagram.webp" alt="Instagram Icon"> @HandMade
+            <img src="email.png" alt="Email Icon"> HandMade@gmail.com
+        </div>
+        <div class="footer-right">
+            &copy; 2025 HandMade
+        </div>
+    </footer>
 </body>
 </html>
         
