@@ -1,6 +1,9 @@
 
 
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     displayReviews();
 });
@@ -9,7 +12,7 @@ function displayReviews() {
     let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
     let reviewsContainer = document.querySelector(".reviews-list");
 
-    reviewsContainer.innerHTML = ""; 
+    /*reviewsContainer.innerHTML = ""; */
 
     reviews.forEach((review, index) => {
         let reviewCard = document.createElement("div");
@@ -25,10 +28,10 @@ function displayReviews() {
                     ${generateStars(review.rating)}
                 </div>
                 <div class="likes">
-                    <img src="like.jpg" alt="Like" class="like-icon" onclick="likeReview(${index}, this)"> 
+                    <img src="like.jpg" alt="Like" class="like-icon" onclick="likeReview(this)"> 
                     <span class="like-count">${review.likes}</span>
-                    <img src="dislike.jpg" alt="Dislike" class="dislike-icon" onclick="dislikeReview(${index}, this)"> 
-                    <span class="dislike-count">${review.dislikes}</span>
+                    <img src="dislike.jpg" alt="Dislike" class="dislike-icon" onclick="dislikeReview(this)"> 
+                    <span class="dislike-count" >${review.dislikes}</span>
                 </div>
             </div>
         `;
@@ -49,7 +52,7 @@ function generateStars(rating) {
     return starsHTML;
 }
 
-function likeReview(index, likeBtn) {
+/*function likeReview(index, likeBtn) {
     let reviews = JSON.parse(localStorage.getItem("reviews"));
     let review = reviews[index];
 
@@ -67,8 +70,13 @@ function dislikeReview(index, dislikeBtn) {
     dislikeBtn.nextElementSibling.textContent = review.dislikes;
 
     localStorage.setItem("reviews", JSON.stringify(reviews));
+}*/
+function likeReview(likeBtn) {
+    let likeCount = likeBtn.nextElementSibling;
+    likeCount.textContent = parseInt(likeCount.textContent) + 1;
 }
 
-
-
-
+function dislikeReview(dislikeBtn) {
+    let dislikeCount = dislikeBtn.nextElementSibling;
+    dislikeCount.textContent = parseInt(dislikeCount.textContent) + 1;
+}
