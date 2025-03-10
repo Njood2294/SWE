@@ -81,9 +81,15 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" required>
             </div>
-            <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn" onclick="h(event)">Login</button>
             <a href="#" class="forgot-password">Forgot Password?</a>
         </form>
+        <script>
+            function h(event) {
+                event.preventDefault(); // Prevents form submission (if inside a form)
+                window.location.href = "../HomePage.html"; // Redirects to the homepage
+            }
+        </script>
     </div>
 </body>
 </html>
