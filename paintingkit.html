@@ -138,6 +138,42 @@
             &copy; 2025 HandMade
         </div>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Handle Add to Cart functionality
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function () {
+                    const productCard = this.closest('.product-card');
+                    const cartMessage = productCard.querySelector('.cart-message');
+                    
+                    // Hide any previously shown messages
+                    document.querySelectorAll('.cart-message').forEach(message => message.style.display = "none");
 
+                    // Show the success message for the clicked product
+                    cartMessage.style.display = "block";
+                    cartMessage.textContent = "Item added to cart!";
+
+                    // Add the item to the cart (this part can be customized)
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const id = productCard.querySelector('.product-title').textContent;
+                    const price = parseFloat(productCard.querySelector('.product-price').textContent.split(' ')[0]);
+
+                    let item = cart.find(item => item.name === id);
+                    if (item) {
+                        item.quantity += 1;
+                    } else {
+                        cart.push({ name: id, price: price, quantity: 1 });
+                    }
+
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                });
+            });
+
+            // Handle the redirection to the cart when clicking the cart icon
+            document.getElementById('cart-link').addEventListener('click', function () {
+                window.location.href = "Cart.html";
+            });
+        });
+    </script>
 </body>
 </html>

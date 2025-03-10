@@ -227,12 +227,14 @@
                     let cart = JSON.parse(localStorage.getItem('cart')) || [];
                     const id = productCard.querySelector('.product-title').textContent;
                     const price = parseFloat(productCard.querySelector('.product-price').textContent.split(' ')[0]);
+                    const imageSrc = productCard.querySelector('img').src; // جلب رابط الصورة
+
 
                     let item = cart.find(item => item.name === id);
                     if (item) {
-                        item.quantity += 1;
+                     item.quantity += 1;
                     } else {
-                        cart.push({ name: id, price: price, quantity: 1 });
+                      cart.push({ name: id, price: price, image: imageSrc, quantity: 1 });
                     }
 
                     localStorage.setItem('cart', JSON.stringify(cart));
