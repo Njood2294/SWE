@@ -54,6 +54,8 @@
 
     .product-image {
         width: 100%;
+        height: 200px;
+        object-fit: cover; /* Ensures the image covers the area without stretching */
         border-radius: 10px;
     }
 
@@ -115,7 +117,7 @@
         <button class="add-to-cart" data-id="2" data-name="Mirror Box For 1" data-price="80" data-stock="0">Add to cart</button>
     </div>
     <div class="product-card">
-        <img src="mirroespecial.png" alt="Mirror Box - Celebration Edition" class="product-image">
+        <img src="mirropecial.png" alt="Mirror Box - Celebration Edition" class="product-image">
         <div class="product-title">Mirror Box - Celebration Edition</div>
         <div class="product-price">150 SAR</div>
         <button class="add-to-cart" data-id="3" data-name="Mirror Box - Celebration Edition" data-price="150" data-stock="2">Add to cart</button>
@@ -170,11 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("message").style.display = "block";
                 document.getElementById("success").style.display = "block";
                 document.getElementById("error").style.display = "none";
-
-                // Redirect to cart page after 3 seconds
-                setTimeout(() => {
-                    window.location.href = "Cart.html";
-                }, 3000);
             } else {
                 // Show error message
                 document.getElementById("message").style.display = "block";
@@ -188,6 +185,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </body>
 </html>
+
+
 
 
 
