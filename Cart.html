@@ -32,7 +32,6 @@
         <h2 id="titel">Shopping Cart</h2>
         <div class="cart-container">
             <div id="cartItemsContainer" class="cart-items">
-                <!-- Cart items dynamically added here -->
                 <p id="empty-message" style="display: none;">Your cart is empty!</p>
             </div>
             <div class="cart-summary">
@@ -183,25 +182,30 @@
 
             cartItemsContainer.addEventListener("click", (e) => {
                 const index = e.target.dataset.index;
-                if (e.target.classList.contains("plus-btn")) {
-                    cartItems[index].quantity++;
+                if (e.target.classList.contains("remove-item")) {
+                    cartItems.splice(index, 1);
+                    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                    renderCart();
                 } else if (e.target.classList.contains("minus-btn")) {
                     if (cartItems[index].quantity > 1) {
                         cartItems[index].quantity--;
+                        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                        renderCart();
                     }
-                } else if (e.target.classList.contains("remove-item")) {
-                    cartItems.splice(index, 1);
+                } else if (e.target.classList.contains("plus-btn")) {
+                    cartItems[index].quantity++;
+                    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                    renderCart();
                 }
-                localStorage.setItem("cartItems", JSON.stringify(cartItems));
-                renderCart();
             });
 
             emptyCartBtn.addEventListener("click", () => {
                 localStorage.removeItem("cartItems");
+                cartItems = [];
                 renderCart();
             });
 
-            renderCart(); // Initial render of the cart
+            renderCart();
         });
     </script>
 </body>
