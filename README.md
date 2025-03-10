@@ -1,4 +1,4 @@
-Handmade 
+Handmade</br>
 In today’s fast-paced world, finding high-quality and affordable craft tools can be challenging. Crafters often struggle with limited availability, inconsistent quality, and high prices.
 
 Handmade is a user-friendly website that simplifies this process by offering a wide range of crafting tools in one place. Whether you’re a beginner exploring new hobbies or an expert looking for specialized supplies, Handmade provides a seamless shopping experience with easy navigation, fast ordering, and reliable support.
