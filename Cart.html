@@ -188,20 +188,16 @@
                 renderCart(); // Re-render the cart after clearing it
             });
 
-            cartContainer.addEventListener("click", function (event) {
-    console.log("زر تم الضغط عليه!"); // تأكيد أن الزر انضغط
-    const id = event.target.getAttribute("data-id");
-    console.log("ID المنتج:", id); // تأكيد أن ID المنتج صحيح
+            cartContainer.addEventListener("click", function(event) {
+                const id = event.target.getAttribute("data-id");
 
-    // Remove Item
-    if (event.target.classList.contains("remove-item")) {
-        console.log("جارٍ حذف المنتج..."); // تأكيد أن شرط الحذف يعمل
-        cart = cart.filter(item => item.id != id);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        renderCart();
-        console.log("تم تحديث السلة!");
-    }
-});/*
+                // Remove Item
+                if (event.target.classList.contains("remove-item")) {
+                    cart = cart.filter(item => item.id !== id);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                }
+
                 // Decrease Quantity
                 else if (event.target.classList.contains("minus-btn")) {
                     const item = cart.find(item => item.id === id);
@@ -220,7 +216,7 @@
                     renderCart();
                 }
             });
-        });*/
+        });
     </script>
 </body>
 </html>
