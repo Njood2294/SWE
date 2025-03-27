@@ -144,79 +144,108 @@
     </style>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartContainer = document.getElementById("cartItemsContainer");
-            const totalPriceContainer = document.getElementById("total-price");
+  <script>
+    // Function to clear the entire cart
+    function emptyCart() {
+        localStorage.removeItem("cartItems");
+        location.reload(); // Reload the page to reflect changes
+    }
 
-            function renderCart() {
-                cartContainer.innerHTML = "";
-                let total = 0;
-                cart.forEach(item => {
-                    const itemElement = document.createElement("div");
-                    itemElement.classList.add("cart-item");
-                    itemElement.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-details">
-                            <h4>${item.name}</h4>
-                            <p>Price: SAR ${item.price}</p>
-                            <div class="quantity-controls">
-                                <button class="minus-btn" data-id="${item.id}">-</button>
-                                <span>${item.quantity}</span>
-                                <button class="plus-btn" data-id="${item.id}">+</button>
-                            </div>
+    // Wait for DOM content to load and then initialize the cart display
+    document.addEventListener("DOMContentLoaded", function () {
+        const cartItemsContainer = document.getElementById("cartItemsContainer");
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+        // If the cart is empty, display a message
+        if (cartItems.length === 0) {
+            cartItemsContainer.innerHTML = "<p>Your cart is empty.</p>";
+        } else {
+            // Otherwise, loop through cart items and display them
+            cartItems.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "cart-item";
+
+                // Create an image element with fallback extensions
+                const imgElement = document.createElement("img");
+                imgElement.alt = item.name;
+                imgElement.className = "cart-image";
+                loadImageWithFallback(imgElement, item.name);
+
+                // Item details and controls (quantity, remove, etc.)
+                itemDiv.innerHTML = `
+                    <div class="cart-details">
+                        <h4>${item.name}</h4>
+                        <div class="quantity-controls">
+                            <button class="minus-btn" onclick="updateQuantity('${item.name}', -1)">-</button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="plus-btn" onclick="updateQuantity('${item.name}', 1)">+</button>
+                            <button class="remove-item" onclick="removeItem('${item.name}')">
+                                <img src="images/bin.png" alt="Remove Item">
+                            </button>
                         </div>
-                        <span class="remove-item" data-id="${item.id}">🗑️</span>
-                    `;
-                    cartContainer.appendChild(itemElement);
-                    total += item.price * item.quantity;
-                });
-                totalPriceContainer.textContent = total.toFixed(2);
-                if (cart.length === 0) {
-                    document.getElementById("empty-message").style.display = "block";
-                } else {
-                    document.getElementById("empty-message").style.display = "none";
-                }
+                        <p class="total-price">Total Price: SAR ${item.price * item.quantity}</p>
+                    </div>
+                `;
+
+                // Add the image before the item details
+                itemDiv.insertBefore(imgElement, itemDiv.firstChild);
+                cartItemsContainer.appendChild(itemDiv);
+            });
+        }
+    });
+
+    // Function to load image with fallback extensions (e.g., webp, jpg, jpeg, png)
+    async function loadImageWithFallback(imgElement, itemName) {
+        const basePath = "images/";
+        const formattedName = itemName.toLowerCase(); // Format the item name to lowercase
+        const extensions = ["webp", "jpg", "jpeg", "png"]; // Possible image extensions
+
+        for (const ext of extensions) {
+            const imagePath = `${basePath}${formattedName}.${ext}`;
+            const imageLoaded = await checkImage(imagePath);
+            if (imageLoaded) {
+                imgElement.src = imagePath; // Set the image source if it exists
+                return;
             }
+        }
+        // Fallback image if none of the extensions work
+        imgElement.src = `${basePath}placeholder_image.png`;
+    }
 
-            renderCart();
-
-            // Empty Cart Functionality
-            document.getElementById("emptyCart").addEventListener("click", function() {
-                localStorage.removeItem("cart");
-                cart = [];
-                renderCart(); // Re-render the cart after clearing it
-            });
-
-            cartContainer.addEventListener("click", function(event) {
-                const id = event.target.getAttribute("data-id");
-
-                // Remove Item
-                if (event.target.classList.contains("remove-item")) {
-                    cart = cart.filter(item => item.id !== id);
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    renderCart();
-                }
-
-                // Decrease Quantity
-                else if (event.target.classList.contains("minus-btn")) {
-                    const item = cart.find(item => item.id === id);
-                    if (item.quantity > 1) {
-                        item.quantity--;
-                        localStorage.setItem('cart', JSON.stringify(cart));
-                        renderCart();
-                    }
-                }
-
-                // Increase Quantity
-                else if (event.target.classList.contains("plus-btn")) {
-                    const item = cart.find(item => item.id === id);
-                    item.quantity++;
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    renderCart();
-                }
-            });
+    // Function to check if an image exists asynchronously
+    function checkImage(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.src = url;
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
         });
-    </script>
+    }
+
+    // Function to update the quantity of a cart item
+    function updateQuantity(name, change) {
+        let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        const itemIndex = cartItems.findIndex(item => item.name === name);
+
+        // Update the quantity if the item exists in the cart
+        if (itemIndex !== -1) {
+            cartItems[itemIndex].quantity += change;
+            if (cartItems[itemIndex].quantity < 1) cartItems[itemIndex].quantity = 1; // Prevent quantity from going below 1
+            localStorage.setItem("cartItems", JSON.stringify(cartItems)); // Save updated cart to localStorage
+            location.reload(); // Reload to update the cart display
+        }
+    }
+
+    // Function to remove an item from the cart
+    function removeItem(name) {
+        let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        // Filter out the item with the given name
+        cartItems = cartItems.filter(item => item.name !== name);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems)); // Update cart in localStorage
+        location.reload(); // Reload to reflect the changes
+    }
+</script>
+
+   
 </body>
 </html>
