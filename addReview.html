@@ -174,7 +174,7 @@ button:hover {
             <h3 id="logo-title">Hand made</h3>
         </div>
         <div id="comHeader">
-            <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home"></a>
            <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
            <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
            <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
@@ -192,32 +192,33 @@ button:hover {
 
     </header>
     <main id="HomePageMain">
-        <form id="reviewForm">
+        <form id="reviewForm" action="addReview.php" method="POST" enctype="multipart/form-data">
         <div class="container">
             <h1 id="tit">add new review</h1>
             <div class="new-post">
                 <div class="input-container">
                     <div id="p">
-                        <h3>product name</h3>
-                    <input type="text" id="productName" name="productName" ></div>
-                    <textarea placeholder="Write your reveiw here....."></textarea>
+                        <h3>product id</h3>
+                    <input type="text" id="product_id" name="product_id"></div>
+                    <textarea name="reviewText" placeholder="Write your reveiw here....."></textarea>
                    
                 </div>
                 
-                <input type="file" id="fileUpload">
+                <input type="file" id="fileUpload" name="reviewImage">
                 <div class="starBox">
               
                 <div class="rating2">
-                    <img src="emptystar.PNG" alt="star" class="star">
-                    <img src="emptystar.PNG" alt="star" class="star">
-                    <img src="emptystar.PNG" alt="star" class="star">
-                    <img src="emptystar.PNG" alt="star" class="star">
-                    <img src="emptystar.PNG" alt="star" class="star">
+                    <input type="hidden" name="rating" id="ratingValue" value="0">
+                    <img src="emptystar.PNG" alt="star" class="star" data-value="1">
+                    <img src="emptystar.PNG" alt="star" class="star" data-value="2">
+                    <img src="emptystar.PNG" alt="star" class="star" data-value="3">
+                    <img src="emptystar.PNG" alt="star" class="star" data-value="4">
+                    <img src="emptystar.PNG" alt="star" class="star" data-value="5">
                 </div>
                      
             </div>
                
-               <button class="add-post">Add reveiw</button> 
+               <button type="submit" class="add-post">Add reveiw</button> 
             
             </div>
         </div>
@@ -235,5 +236,10 @@ button:hover {
             &copy; 2025 HandMade
         </div>
     </footer>
+    
+    
+   
+    
+    
 </body>
 </html>

@@ -1,37 +1,46 @@
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
-    displayReviews();
+    fetchReviews();
 });
 
-function displayReviews() {
-    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+function fetchReviews() {
+    fetch("getReviews.php")
+        .then(response => response.json())
+        .then(data => {
+            console.log("returned info from getReviews.php:", data);
+            if (Array.isArray(data)) {
+                displayReviews(data);
+            } else {
+                console.error("The retrieved data is not an array!", data);
+            }
+        })
+        .catch(error => console.error("Error fetching ratings:", error));
+}
+
+function displayReviews(reviews) {
     let reviewsContainer = document.querySelector(".reviews-list");
+    reviewsContainer.innerHTML = ""; 
 
-    /*reviewsContainer.innerHTML = ""; */
-
-    reviews.forEach((review, index) => {
+    reviews.forEach(review => {
         let reviewCard = document.createElement("div");
         reviewCard.classList.add("review-card");
 
         reviewCard.innerHTML = `
-            <p class="user-name">${review.userName}</p>
-            <img src="${review.imageUrl || "default-user.png"}" alt="User Image" class="user-image">
-            <h3 class="review-title">${review.productName}</h3>
-            <p class="review-text">"${review.reviewText}"</p>
+            <div class="review-header">
+                <img src="${review.img_url ? review.img_url : 'default-user.png'}" alt="User Image" class="user-image">
+                <p class="user-name">${review.user_name}</p>
+            </div>
+            <h3 class="review-title">${review.product_name}</h3>
+            <p class="review-text">"${review.review_text}"</p>
             <div class="review-footer">
                 <div class="rating">
                     ${generateStars(review.rating)}
                 </div>
                 <div class="likes">
-                    <img src="like.jpg" alt="Like" class="like-icon" onclick="likeReview(this)"> 
+                    <img src="like.jpg" alt="Like" class="like-icon" onclick="updateLike(${review.review_id}, 'like', this)"> 
                     <span class="like-count">${review.likes}</span>
-                    <img src="dislike.jpg" alt="Dislike" class="dislike-icon" onclick="dislikeReview(this)"> 
-                    <span class="dislike-count" >${review.dislikes}</span>
+                    
+                    <img src="dislike.jpg" alt="Dislike" class="dislike-icon" onclick="updateLike(${review.review_id}, 'dislike', this)"> 
+                    <span class="dislike-count">${review.dislikes}</span>
                 </div>
             </div>
         `;
@@ -40,43 +49,109 @@ function displayReviews() {
     });
 }
 
+function updateLike(reviewId, action, element) {
+    let counter = element.nextElementSibling; 
+    
+    fetch("updateLikes.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `review_id=${reviewId}&action=${action}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            counter.textContent = parseInt(counter.textContent) + 1; // زيادة العدد
+        } else {
+            console.error("error", data.message);
+        }
+    })
+    
+}
+
+
 function generateStars(rating) {
     let starsHTML = "";
-    for (let i = 0; i < 5; i++) {
-        if (i < rating) {
-            starsHTML += `<img src="filledstar5.jpg" alt="Star" class="star">`;
-        } else {
-            starsHTML += `<img src="emptystar.PNG" alt="Star" class="star">`;
-        }
+    for (let i = 1; i <= 5; i++) {
+        starsHTML += `<img src="${i <= rating ? 'filledstar5.jpg' : 'emptystar.PNG'}" alt="Star" class="star">`;
     }
     return starsHTML;
 }
 
-/*function likeReview(index, likeBtn) {
-    let reviews = JSON.parse(localStorage.getItem("reviews"));
-    let review = reviews[index];
 
-    review.likes += 1;
-    likeBtn.nextElementSibling.textContent = review.likes;
+document.addEventListener("DOMContentLoaded", function () {
+    fetchReviews();
+});
 
-    localStorage.setItem("reviews", JSON.stringify(reviews));
+function fetchReviews() {
+    fetch("getReviews.php")
+       .then(response => response.json())
+      .then(data => {
+            console.log("returned info from getReviews.php:", data);
+           if (Array.isArray(data)) {
+                displayReviews(data);
+            } else {
+                console.error("The retrieved data is not an array!", data);
+            }
+        })
+      .catch(error => console.error("Error fetching ratings:", error));
 }
 
-function dislikeReview(index, dislikeBtn) {
-    let reviews = JSON.parse(localStorage.getItem("reviews"));
-    let review = reviews[index];
 
-    review.dislikes += 1;
-    dislikeBtn.nextElementSibling.textContent = review.dislikes;
 
-    localStorage.setItem("reviews", JSON.stringify(reviews));
-}*/
-function likeReview(likeBtn) {
-    let likeCount = likeBtn.nextElementSibling;
-    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetchReviews();
+
+    let searchBtn = document.getElementById("search-btn");
+    let searchBox = document.getElementById("search-box");
+
+    if (!searchBtn || !searchBox) {
+       
+        return;
+    }
+
+   
+    function executeSearch() {
+        let query = searchBox.value.trim();
+        if (query === "") {
+            alert("Please enter your product name or id.");
+            return;
+        }
+
+       
+
+        fetch(`search.php?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data received:", data);
+                if (Array.isArray(data) && data.length > 0) {
+                    let categoryId = data[0].category_id;
+                    switch (parseInt(categoryId)) { 
+    case 1: window.location.href = "paintingkit.html"; break;
+    case 2: window.location.href = "pottery.html"; break;
+    case 3: window.location.href = "woodcarving.html"; break;
+    case 4: window.location.href = "mirror.html"; break;
+    case 5: window.location.href = "charms.html"; break;
+    default: alert(" No suitable page found for this product.");
 }
+                } else {
+                    alert(" No products found");
+                }
+            })
+            .catch(error => console.error("error", error));
+    }
 
-function dislikeReview(dislikeBtn) {
-    let dislikeCount = dislikeBtn.nextElementSibling;
-    dislikeCount.textContent = parseInt(dislikeCount.textContent) + 1;
-}
+
+    searchBtn.addEventListener("click", executeSearch);
+
+    
+    searchBox.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+            executeSearch();
+        }
+    });
+
+   
+});
