@@ -140,7 +140,7 @@ a{
 .custom-container {
     display: flex;
     justify-content: center;
-    margin-top: 8%;
+    margin-top: 12%;
    }
 
 .left-box {
@@ -271,7 +271,7 @@ a{
 
 .add {
     position: absolute;
-    top: 62em;
+    top: 67em;
     right: 3.5em;
     padding: 0.5em 1.5em;
     font-size: 1em;
@@ -335,7 +335,38 @@ a{
 
 
 
+#search-container {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10%;
+    background-color: white;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
+#search-box {
+    border: none;
+    padding: 0.5em;
+    width: 200px;
+    outline: none;
+    font-size: 1em;
+}
+
+#search-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+#search-icon {
+    width: 3em;  /* تعديل حجم الأيقونة حسب الحاجة */
+    height: 3em;
+}
 
 
 
