@@ -142,81 +142,80 @@
             color: #9B5372;
         }
     </style>
+  <script>
+ document.addEventListener("DOMContentLoaded", function () {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.getElementById("cartItemsContainer");
+    const totalPriceContainer = document.getElementById("total-price");
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const cartContainer = document.getElementById("cartItemsContainer");
-            const totalPriceContainer = document.getElementById("total-price");
+    function renderCart() {
+        cartContainer.innerHTML = "";
+        let total = 0;
 
-            function renderCart() {
-                cartContainer.innerHTML = "";
-                let total = 0;
-                cart.forEach(item => {
-                    const itemElement = document.createElement("div");
-                    itemElement.classList.add("cart-item");
-                    itemElement.innerHTML = 
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-details">
-                            <h4>${item.name}</h4>
-                            <p>Price: SAR ${item.price}</p>
-                            <div class="quantity-controls">
-                                <button class="minus-btn" data-id="${item.id}">-</button>
-                                <span>${item.quantity}</span>
-                                <button class="plus-btn" data-id="${item.id}">+</button>
-                            </div>
-                        </div>
-                        <span class="remove-item" data-id="${item.id}">🗑️</span>
-                    ;
-                    cartContainer.appendChild(itemElement);
-                    total += item.price * item.quantity;
-                });
-                totalPriceContainer.textContent = total.toFixed(2);
-                if (cart.length === 0) {
-                    document.getElementById("empty-message").style.display = "block";
-                } else {
-                    document.getElementById("empty-message").style.display = "none";
-                }
-            }
-
-            renderCart();
-
-            // Empty Cart Functionality
-            document.getElementById("emptyCart").addEventListener("click", function() {
-                localStorage.removeItem("cart");
-                cart = [];
-                renderCart(); // Re-render the cart after clearing it
-            });
-
-            cartContainer.addEventListener("click", function(event) {
-                const id = event.target.getAttribute("data-id");
-
-                // Remove Item
-                if (event.target.classList.contains("remove-item")) {
-                    cart = cart.filter(item => item.id !== id);
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    renderCart();
-                }
-
-                // Decrease Quantity
-                else if (event.target.classList.contains("minus-btn")) {
-                    const item = cart.find(item => item.id === id);
-                    if (item.quantity > 1) {
-                        item.quantity--;
-                        localStorage.setItem('cart', JSON.stringify(cart));
-                        renderCart();
-                    }
-                }
-
-                // Increase Quantity
-                else if (event.target.classList.contains("plus-btn")) {
-                    const item = cart.find(item => item.id === id);
-                    item.quantity++;
-                    localStorage.setItem('cart', JSON.stringify(cart));
-                    renderCart();
-                }
-            });
+        cart.forEach(item => {
+            const itemElement = document.createElement("div");
+            itemElement.classList.add("cart-item");
+            itemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>Price: SAR ${item.price}</p>
+                    <div class="quantity-controls">
+                        <button class="minus-btn" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="plus-btn" data-id="${item.id}">+</button>
+                    </div>
+                </div>
+                <span class="remove-item" data-id="${item.id}">🗑️</span>
+            `;
+            cartContainer.appendChild(itemElement);
+            total += item.price * item.quantity;
         });
-    </script>
+
+        totalPriceContainer.textContent = total.toFixed(2);
+        document.getElementById("empty-message").style.display = cart.length === 0 ? "block" : "none";
+    }
+
+    renderCart();
+
+    cartContainer.addEventListener("click", function(event) {
+        const id = Number(event.target.getAttribute("data-id")); // Convert to Number
+        
+        if (!id) return; // Prevent errors if no ID is found
+
+        // Remove Item
+        if (event.target.classList.contains("remove-item")) {
+            cart = cart.filter(item => item.id !== id);
+        }
+
+        // Decrease Quantity
+        else if (event.target.classList.contains("minus-btn")) {
+            const item = cart.find(item => item.id === id);
+            if (item && item.quantity > 1) {
+                item.quantity--;
+            }
+        }
+
+        // Increase Quantity
+        else if (event.target.classList.contains("plus-btn")) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity++;
+            }
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    });
+});
+
+function emptyCart() {
+    console.log("Empty cart button clicked");
+    localStorage.removeItem("cart");
+    location.reload();
+}
+
+</script>
+    
 </body>
 </html>
