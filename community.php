@@ -93,9 +93,9 @@ $conn->close();
     align-items: center;
         }
        textarea {
-      width: 100%; /* جعله يمتد بكامل عرض الحاوية */
-    max-width: 90%; /* زيادة الحد الأقصى للعرض */
-    height: 180px; /* زيادة الارتفاع */
+      width: 100%; 
+    max-width: 90%; 
+    height: 180px; 
     padding: 15px;
     border: none;
     border-radius: 8px;
@@ -103,7 +103,7 @@ $conn->close();
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-size: 18px;
     resize: none;
-    display: block; /* التأكد أنه لا يتأثر بأي فلوت */
+    display: block; 
 }
         input[type="file"] {
             border: none;
