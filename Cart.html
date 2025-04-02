@@ -143,79 +143,86 @@
         }
     </style>
   <script>
- document.addEventListener("DOMContentLoaded", function () {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartContainer = document.getElementById("cartItemsContainer");
-    const totalPriceContainer = document.getElementById("total-price");
-
-    function renderCart() {
-        cartContainer.innerHTML = "";
-        let total = 0;
-
-        cart.forEach(item => {
-            const itemElement = document.createElement("div");
-            itemElement.classList.add("cart-item");
-            itemElement.innerHTML = `
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p>Price: SAR ${item.price}</p>
-                    <div class="quantity-controls">
-                        <button class="minus-btn" data-id="${item.id}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="plus-btn" data-id="${item.id}">+</button>
+    document.addEventListener("DOMContentLoaded", function () {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartContainer = document.getElementById("cartItemsContainer");
+        const totalPriceContainer = document.getElementById("total-price");
+        const emptyMessage = document.getElementById("empty-message");
+    
+        function renderCart() {
+            cartContainer.innerHTML = "";
+            let total = 0;
+    
+            if (cart.length === 0) {
+                emptyMessage.style.display = "block";
+            } else {
+                emptyMessage.style.display = "none";
+            }
+    
+            cart.forEach((item) => {
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item");
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Price: SAR ${item.price}</p>
+                        <div class="quantity-controls">
+                            <button class="minus-btn" data-id="${item.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="plus-btn" data-id="${item.id}">+</button>
+                        </div>
                     </div>
-                </div>
-                <span class="remove-item" data-id="${item.id}">🗑️</span>
-            `;
-            cartContainer.appendChild(itemElement);
-            total += item.price * item.quantity;
-        });
-
-        totalPriceContainer.textContent = total.toFixed(2);
-        document.getElementById("empty-message").style.display = cart.length === 0 ? "block" : "none";
-    }
-
-    renderCart();
-
-    cartContainer.addEventListener("click", function(event) {
-        const id = Number(event.target.getAttribute("data-id")); // Convert to Number
-        
-        if (!id) return; // Prevent errors if no ID is found
-
-        // Remove Item
-        if (event.target.classList.contains("remove-item")) {
-            cart = cart.filter(item => item.id !== id);
+                    <span class="remove-item" data-id="${item.id}">🗑️</span>
+                `;
+                cartContainer.appendChild(itemElement);
+                total += item.price * item.quantity;
+            });
+    
+            totalPriceContainer.textContent = total.toFixed(2);
+            localStorage.setItem("cart", JSON.stringify(cart)); // Ensure it's always saved
         }
-
-        // Decrease Quantity
-        else if (event.target.classList.contains("minus-btn")) {
-            const item = cart.find(item => item.id === id);
-            if (item && item.quantity > 1) {
-                item.quantity--;
-            }
-        }
-
-        // Increase Quantity
-        else if (event.target.classList.contains("plus-btn")) {
-            const item = cart.find(item => item.id === id);
-            if (item) {
-                item.quantity++;
-            }
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
+    
         renderCart();
+    
+        cartContainer.addEventListener("click", function (event) {
+            const target = event.target;
+            const id = target.getAttribute("data-id");
+            if (!id) return; // Prevent errors if no ID is found
+    
+            const itemIndex = cart.findIndex((item) => String(item.id) === id); // Ensure ID comparison works
+    
+            // 🗑️ **Remove Item**
+            if (target.classList.contains("remove-item")) {
+                if (itemIndex !== -1) {
+                    cart.splice(itemIndex, 1);
+                    renderCart(); // Update UI
+                }
+            }
+            // ➖ **Decrease Quantity**
+            else if (target.classList.contains("minus-btn")) {
+                if (itemIndex !== -1 && cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity--;
+                    renderCart(); // Update UI
+                }
+            }
+            // ➕ **Increase Quantity**
+            else if (target.classList.contains("plus-btn")) {
+                if (itemIndex !== -1) {
+                    cart[itemIndex].quantity++;
+                    renderCart(); // Update UI
+                }
+            }
+        });
+    
+        document.getElementById("emptyCart").addEventListener("click", function () {
+            console.log("Empty cart button clicked");
+            localStorage.removeItem("cart");
+            cart = [];
+            renderCart(); // Update UI
+        });
     });
-});
-
-function emptyCart() {
-    console.log("Empty cart button clicked");
-    localStorage.removeItem("cart");
-    location.reload();
-}
-
-</script>
+    </script>
     
 </body>
 </html>
