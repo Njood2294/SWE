@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Made - Shopping Cart</title>
+    <link rel="stylesheet" href="HomePageCSS.css">
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="Logo-removebg-preview - Copy.png" alt="Website Logo" width="25%" height="25%">
+            <h3 id="logo-title">Hand made</h3>
+        </div>
+        <div id="comHeader">
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
+            <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
+            <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
+            <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
+        </div>
+        <div id="comHeader1">
+            <a href="paintingkit.html" class="categories">painting</a>
+            <a href="pottery.html" class="categories">pottery</a>
+            <a href="woodcarving.html" class="categories">Wood craving</a>
+            <a href="mirror.html" class="categories">Mirrors</a>
+            <a href="charms.html" class="categories">Chains</a>
+        </div>
+    </header>
+
+    <main id="CartMain">
+        <h2 id="titel">Shopping Cart</h2>
+        <div class="cart-container">
+            <div id="cartItemsContainer" class="cart-items">
+                <p id="empty-message" style="display: none;">Your cart is empty!</p>
+            </div>
+            <div class="cart-summary">
+                <button id="emptyCart" class="empty-cart-btn" onclick="emptyCart()">Empty Cart</button>
+                <p>Total Price: SAR <span id="total-price">0.00</span></p>
+                <form action="orderConfirmation.php" method="POST" id="checkout">
+                    <input type="hidden" name="cart_data" id="cartData">
+                    <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-left">
+            <p>Contact Us:</p>
+            <img src="twitter.webp" alt="Twitter Icon"> @HandMade
+            <img src="instagram.webp" alt="Instagram Icon"> @HandMade
+            <img src="email.png" alt="Email Icon"> HandMade@gmail.com
+        </div>
+        <div class="footer-right">
+            &copy; 2025 HandMade
+        </div>
+    </footer>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #EDD8E2;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .cart-container {
+            width: 50%;
+            background-color: white;
+            padding: 20px;
+            margin: 50px auto;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cart-summary {
+            margin-top: 20px;
+        }
+
+        .checkout-btn, .empty-cart-btn {
+            background-color: #d77a8b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover, .empty-cart-btn:hover {
+            background-color: #b85f72;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            background-color: #f4f4f4;
+            border: none;
+            padding: 5px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .remove-item {
+            cursor: pointer;
+            color: red;
+            font-size: 18px;
+        }
+
+        .remove-item:hover {
+            color: #d77a8b;
+        }
+
+        #empty-message {
+            font-size: 18px;
+            color: #b85f72;
+            font-weight: bold;
+        }
+
+        #titel {
+            color: #9B5372;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartContainer = document.getElementById("cartItemsContainer");
+            const totalPriceContainer = document.getElementById("total-price");
+            const emptyMessage = document.getElementById("empty-message");
+
+            function renderCart() {
+                cartContainer.innerHTML = "";
+                let total = 0;
+
+                if (cart.length === 0) {
+                    emptyMessage.style.display = "block";
+                } else {
+                    emptyMessage.style.display = "none";
+                }
+
+                cart.forEach((item, index) => {
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("cart-item");
+                    itemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p>Price: SAR ${item.price}</p>
+                            <div class="quantity-controls">
+                                <button class="minus-btn" data-id="${item.id}" data-index="${index}">-</button>
+                                <span class="quantity" data-id="${item.id}" data-index="${index}">${item.quantity}</span>
+                                <button class="plus-btn" data-id="${item.id}" data-index="${index}">+</button>
+                            </div>
+                        </div>
+                        <span class="remove-item" data-id="${item.id}" data-index="${index}">🗑️</span>
+                    `;
+                    cartContainer.appendChild(itemElement);
+                    total += item.price * item.quantity;
+                });
+
+                totalPriceContainer.textContent = total.toFixed(2);
+            }
+
+            renderCart();
+
+            cartContainer.addEventListener("click", function (event) {
+                const target = event.target;
+                const id = target.getAttribute("data-id");
+                const index = target.getAttribute("data-index");
+
+                if (!id || index === null) return;
+
+                const itemIndex = cart.findIndex((item) => String(item.id) === String(id));
+
+                if (itemIndex === -1) return;
+
+                if (target.classList.contains("remove-item")) {
+                    cart.splice(itemIndex, 1); // حذف العنصر
+                } 
+                else if (target.classList.contains("minus-btn")) {
+                    if (cart[itemIndex].quantity > 1) {
+                        cart[itemIndex].quantity--; // تقليل الكمية
+                    }
+                } 
+                else if (target.classList.contains("plus-btn")) {
+                    cart[itemIndex].quantity++; // زيادة الكمية
+                }
+
+                localStorage.setItem("cart", JSON.stringify(cart)); // تحديث السلة في localStorage
+                renderCart(); // إعادة رسم السلة
+            });
+
+            // مسح السلة
+            document.getElementById("emptyCart").addEventListener("click", function () {
+                localStorage.removeItem("cart");
+                cart = [];
+                renderCart(); // إعادة رسم السلة بعد المسح
+            });
+
+            // إرسال الطلب
+            document.getElementById("checkout").addEventListener("submit", function (event) {
+                event.preventDefault();
+                cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+                if (cart.length === 0) {
+                    alert("Your cart is empty! Please add items before proceeding.");
+                    return;
+                }
+
+                document.getElementById("cartData").value = JSON.stringify(cart);
+                this.submit(); // إرسال الطلب
+            });
+        });
+
+        // دالة لمسح السلة
+        function emptyCart() {
+            localStorage.removeItem("cart");
+            document.getElementById("cartItemsContainer").innerHTML = '';
+            document.getElementById("total-price").textContent = '0.00';
+            document.getElementById("empty-message").style.display = "block";
+        }
+    </script>
+</body>
+</html>
