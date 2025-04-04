@@ -147,104 +147,94 @@
         }
     </style>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartContainer = document.getElementById("cartItemsContainer");
-            const totalPriceContainer = document.getElementById("total-price");
-            const emptyMessage = document.getElementById("empty-message");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartContainer = document.getElementById("cartItemsContainer");
+        const totalPriceContainer = document.getElementById("total-price");
+        const emptyMessage = document.getElementById("empty-message");
 
-            function renderCart() {
-                cartContainer.innerHTML = "";
-                let total = 0;
+        function renderCart() {
+            cartContainer.innerHTML = "";
+            let total = 0;
 
-                if (cart.length === 0) {
-                    emptyMessage.style.display = "block";
-                } else {
-                    emptyMessage.style.display = "none";
-                }
-
-                cart.forEach((item, index) => {
-                    const itemElement = document.createElement("div");
-                    itemElement.classList.add("cart-item");
-                    itemElement.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-details">
-                            <h4>${item.name}</h4>
-                            <p>Price: SAR ${item.price}</p>
-                            <div class="quantity-controls">
-                                <button class="minus-btn" data-id="${item.id}" data-index="${index}">-</button>
-                                <span class="quantity" data-id="${item.id}" data-index="${index}">${item.quantity}</span>
-                                <button class="plus-btn" data-id="${item.id}" data-index="${index}">+</button>
-                            </div>
-                        </div>
-                        <span class="remove-item" data-id="${item.id}" data-index="${index}">🗑️</span>
-                    `;
-                    cartContainer.appendChild(itemElement);
-                    total += item.price * item.quantity;
-                });
-
-                totalPriceContainer.textContent = total.toFixed(2);
+            if (cart.length === 0) {
+                emptyMessage.style.display = "block";
+            } else {
+                emptyMessage.style.display = "none";
             }
 
+            cart.forEach((item, index) => {
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item");
+                itemElement.dataset.index = index;  // تحديد المنتج باستخدام index
+
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Price: SAR ${item.price}</p>
+                        <div class="quantity-controls">
+                            <button class="minus-btn" data-index="${index}">-</button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="plus-btn" data-index="${index}">+</button>
+                        </div>
+                    </div>
+                    <span class="remove-item" data-index="${index}">🗑️</span>
+                `;
+
+                cartContainer.appendChild(itemElement);
+                total += item.price * item.quantity;
+            });
+
+            totalPriceContainer.textContent = total.toFixed(2);
+        }
+
+        renderCart();
+
+        cartContainer.addEventListener("click", function (event) {
+            const target = event.target;
+            const index = target.getAttribute("data-index");
+
+            if (index === null) return; // إذا لم يكن هناك `data-index` لا تفعل شيئًا
+
+            const itemIndex = parseInt(index, 10);
+
+            if (target.classList.contains("remove-item")) {
+                cart.splice(itemIndex, 1);
+            } 
+            else if (target.classList.contains("minus-btn")) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity--;
+                }
+            } 
+            else if (target.classList.contains("plus-btn")) {
+                cart[itemIndex].quantity++;
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
             renderCart();
-
-            cartContainer.addEventListener("click", function (event) {
-                const target = event.target;
-                const id = target.getAttribute("data-id");
-                const index = target.getAttribute("data-index");
-
-                if (!id || index === null) return;
-
-                const itemIndex = cart.findIndex((item) => String(item.id) === String(id));
-
-                if (itemIndex === -1) return;
-
-                if (target.classList.contains("remove-item")) {
-                    cart.splice(itemIndex, 1); // حذف العنصر
-                } 
-                else if (target.classList.contains("minus-btn")) {
-                    if (cart[itemIndex].quantity > 1) {
-                        cart[itemIndex].quantity--; // تقليل الكمية
-                    }
-                } 
-                else if (target.classList.contains("plus-btn")) {
-                    cart[itemIndex].quantity++; // زيادة الكمية
-                }
-
-                localStorage.setItem("cart", JSON.stringify(cart)); // تحديث السلة في localStorage
-                renderCart(); // إعادة رسم السلة
-            });
-
-            // مسح السلة
-            document.getElementById("emptyCart").addEventListener("click", function () {
-                localStorage.removeItem("cart");
-                cart = [];
-                renderCart(); // إعادة رسم السلة بعد المسح
-            });
-
-            // إرسال الطلب
-            document.getElementById("checkout").addEventListener("submit", function (event) {
-                event.preventDefault();
-                cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-                if (cart.length === 0) {
-                    alert("Your cart is empty! Please add items before proceeding.");
-                    return;
-                }
-
-                document.getElementById("cartData").value = JSON.stringify(cart);
-                this.submit(); // إرسال الطلب
-            });
         });
 
-        // دالة لمسح السلة
-        function emptyCart() {
+        document.getElementById("emptyCart").addEventListener("click", function () {
             localStorage.removeItem("cart");
-            document.getElementById("cartItemsContainer").innerHTML = '';
-            document.getElementById("total-price").textContent = '0.00';
-            document.getElementById("empty-message").style.display = "block";
-        }
-    </script>
+            cart = [];
+            renderCart();
+        });
+
+        document.getElementById("checkout").addEventListener("submit", function (event) {
+            event.preventDefault();
+            cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (cart.length === 0) {
+                alert("Your cart is empty! Please add items before proceeding.");
+                return;
+            }
+
+            document.getElementById("cartData").value = JSON.stringify(cart);
+            this.submit();
+        });
+    });
+</script>
 </body>
 </html>
