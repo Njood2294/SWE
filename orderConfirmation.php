@@ -1,3 +1,98 @@
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start();
+
+// تحقق من تسجيل دخول المستخدم
+if (!isset($_SESSION['user_id'])) {
+    die("User not logged in.");
+}
+
+$user_id = $_SESSION['user_id'];
+
+// الاتصال بقاعدة البيانات
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "handmade";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// إنشاء order_id عشوائي فريد مكوّن من 3 خانات
+function generateUniqueOrderId($conn) {
+    do {
+        $order_id = str_pad(rand(0, 999), 3, '0', STR_PAD_LEFT);
+        $check = $conn->query("SELECT * FROM orders WHERE order_id = '$order_id'");
+    } while ($check->num_rows > 0);
+    return $order_id;
+}
+
+// استلام بيانات السلة
+if (!isset($_POST['cart_data'])) {
+    die("No cart data received.");
+}
+
+$cart = json_decode($_POST['cart_data'], true);
+if (!$cart || count($cart) == 0) {
+    die("Empty cart.");
+}
+
+// حساب التوتال واستخراج category_id من أول منتج
+$total_price = 0;
+$category_id = 1; // افتراضي
+
+foreach ($cart as $index => $item) {
+    $quantity = isset($item['quantity']) ? (int)$item['quantity'] : 1;
+    $price = isset($item['price']) ? (float)$item['price'] : 0;
+
+    $total_price += $price * $quantity;
+
+    if ($index == 0 && isset($item['category_id'])) {
+        $category_id = (int)$item['category_id'];
+        echo "Category ID from Cart: " . $category_id . "<br>"; // طباعة category_id من السلة
+
+        $product_name = $item['name'];
+        echo "Product Name: '$product_name'<br>"; // طباعة اسم المنتج للتحقق من تطابقه
+
+        // جلب category_id بناءً على اسم المنتج
+        $stmt = $conn->prepare("SELECT category_id FROM category WHERE BINARY name = ? LIMIT 1");
+        $stmt->bind_param("s", $product_name);
+        $stmt->execute();
+        $stmt->bind_result($category_id);
+        $stmt->fetch();
+        $stmt->close();
+
+        // طباعة القيمة المسترجعة
+        echo "Fetched Category ID from database: " . $category_id . "<br>";
+
+        // تحقق من استخراج category_id الصحيح
+        if ($category_id === null || $category_id == 0) {
+            echo "Warning: Category not found for product: $product_name. Defaulting to category 1.<br>";
+            $category_id = 1; // fallback لقيمة افتراضية
+        } else {
+            echo "Successfully fetched category_id: " . $category_id . "<br>";
+        }
+    }
+}
+
+// حفظ الطلب
+$order_id = generateUniqueOrderId($conn);
+$order_date = date('Y-m-d H:i:s');
+
+$sql = "INSERT INTO orders (order_id, user_id, category_id, order_date, total_price)
+        VALUES ('$order_id', '$user_id', '$category_id', '$order_date', '$total_price')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "✅ Order placed successfully! Order ID: $order_id";
+} else {
+    echo "❌ Error placing order: " . $conn->error;
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,6 +209,7 @@
             const orderItemsContainer = document.getElementById("orderItemsContainer");
             const totalPriceDisplay = document.getElementById("total-price");
 
+            // استلام بيانات السلة من localStorage
             let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
             let totalPrice = 0;
 
@@ -140,12 +236,10 @@
 
             totalPriceDisplay.textContent = totalPrice.toFixed(2);
 
-            // Clear cart after confirmation
+            // مسح السلة بعد تأكيد الطلب
             localStorage.removeItem("cart");
         });
     </script>
 
 </body>
 </html>
-
-
