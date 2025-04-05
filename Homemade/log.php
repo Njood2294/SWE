@@ -20,20 +20,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"]) && isset($_POST[
     $p = $_POST["pass"];
 
     // Check if the user exists
-    $sql = "SELECT * FROM User WHERE user_id = '$i' AND password = '$p'";
+    $sql = "SELECT * FROM User WHERE user_id = '$i'";
     $result = mysqli_query($connect, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
+        
+       if (password_verify($p, $row['password'])) {
+            // Store user data in session
+            $_SESSION['user_id'] = $row['user_id'];
+            $_SESSION['user_name'] = $row['name'];
+            $_SESSION['user_email'] = $row['email'];
 
-        // Store user data in session
-        $_SESSION['user_id'] = $row['user_id'];
-        $_SESSION['user_name'] = $row['name'];
-        $_SESSION['user_email'] = $row['email'];
-
-        // Redirect to homepage
-        header("Location: ../HomePage.html");
-        exit();
+            header("Location: ../HomePage.html");
+            exit();
+        } else {
+            echo "<script>alert('Invalid Password!'); window.location.href='login.html';</script>";
+        }
     } else {
         echo "<script>alert('Invalid ID or Password!'); window.location.href='login.html';</script>";
     }
