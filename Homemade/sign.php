@@ -16,7 +16,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["id"])&& isset($_POST["nam
 {
     $i=$_POST["id"];
     $n=$_POST["name"];
-    $p=$_POST["pass"];
+    $p=password_hash($_POST['pass'], PASSWORD_DEFAULT);
     $e=$_POST["email"];
     
     $sql="INSERT INTO User(user_id,name,email,password) VALUES('$i','$n','$e','$p')";
