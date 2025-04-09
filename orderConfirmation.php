@@ -3,7 +3,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
 
-// تحقق من تسجيل دخول المستخدم
 if (!isset($_SESSION['user_id'])) {
     die("User not logged in.");
 }
