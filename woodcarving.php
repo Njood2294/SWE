@@ -6,7 +6,7 @@
         ini_set('log_errors', 1) ; ?>
         
         <?php
-        $connection = mysqli_connect("localhost", "root", "root" , "SoftwareProject");
+        $connection = mysqli_connect("localhost", "root", "root" , "handmade");
         if(mysqli_connect_error()) {
         die(mysqli_connect_error()) ;}
         
@@ -25,17 +25,17 @@
             <h3 id="logo-title">Hand made</h3>
         </div>
         <div id="comHeader">
-            <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
-            <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" id="cart-link"></a>
-            <a href="Homemade/profile.html"> <img src="user-solid.svg" alt="profile"></a>
-            <a href="Homemade/signin.html"> <img src="logout.svg" alt="logout" ></a>
+            <a href="HomePage.php"> <img src="Home.svg" alt="Home" ></a>
+            <a href="Cart.php"> <img src="cart-shopping-solid.svg" alt="cart" id="cart-link"></a>
+            <a href="Homemade/profile.php"> <img src="user-solid.svg" alt="profile"></a>
+            <a href="Homemade/signin.php"> <img src="logout.svg" alt="logout" ></a>
         </div>
         <div id="comHeader1">
-            <a href="paintingkit.html" class="categories">painting</a>
-            <a href="pottery.html" class="categories">pottery</a>
-            <a href="woodcarving.html" class="categories">Wood craving</a>
-            <a href="mirror.html" class="categories">Mirrors</a>
-            <a href="charms.html" class="categories">Chains</a>
+            <a href="paintingkit.php" class="categories">painting</a>
+            <a href="pottery.php" class="categories">pottery</a>
+            <a href="woodcarving.php" class="categories">Wood craving</a>
+            <a href="mirror.php" class="categories">Mirrors</a>
+            <a href="charms.php" class="categories">Chains</a>
         </div>
     </header>
     <style>
