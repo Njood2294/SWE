@@ -307,11 +307,11 @@ a{
            <a href="Homemade/logout.php"> <img src="logout.svg" alt="logout" ></a>
         </div>
         <div id="comHeader1">
-           <a href="paintingkit.html" class="categories">painting</a>
-            <a href="pottery.html" class="categories">pottery</a>
-            <a href="woodcarving.html" class="categories">Wood craving</a>
-            <a href="mirror.html" class="categories">Mirrors</a>
-            <a href="charms.html" class="categories">Chains</a>
+           <a href="paintingkit.php" class="categories">painting</a>
+            <a href="pottery.php" class="categories">pottery</a>
+            <a href="woodcarving.php" class="categories">Wood craving</a>
+            <a href="mirror.php" class="categories">Mirrors</a>
+            <a href="charms.php" class="categories">Chains</a>
         </div>
 
 
