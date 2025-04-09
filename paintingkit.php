@@ -24,8 +24,8 @@
             <h3 id="logo-title">Hand made</h3>
         </div>
         <div id="comHeader">
-            <a href="HomePage.php"> <img src="Home.svg" alt="Home" ></a>
-           <a href="Cart.php"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
+            <a href="HomePage.html"> <img src="Home.svg" alt="Home" ></a>
+           <a href="Cart.html"> <img src="cart-shopping-solid.svg" alt="cart" ></a>
           <a href="Homemade/profile.php"> <img src="user-solid.svg" alt="profile"></a>
            <a href="Homemade/signin.php"> <img src="logout.svg" alt="logout" ></a>
           
