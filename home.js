@@ -128,11 +128,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (Array.isArray(data) && data.length > 0) {
                     let categoryId = data[0].category_id;
                     switch (parseInt(categoryId)) { 
-    case 1: window.location.href = "paintingkit.html"; break;
-    case 2: window.location.href = "pottery.html"; break;
-    case 3: window.location.href = "woodcarving.html"; break;
-    case 4: window.location.href = "mirror.html"; break;
-    case 5: window.location.href = "charms.html"; break;
+    case 1: window.location.href = "mirror.php"; break;
+    case 2: window.location.href = "pottery.php"; break;
+    case 3: window.location.href = "woodcarving.php"; break;
+    case 4: window.location.href = "paintingkit.php"; break;
+    case 5: window.location.href = "charms.php"; break;
     default: alert(" No suitable page found for this product.");
 }
                 } else {
@@ -141,6 +141,16 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error("error", error));
     }
+
+
+
+
+
+
+
+
+
+
 
 
     searchBtn.addEventListener("click", executeSearch);

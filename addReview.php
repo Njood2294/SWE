@@ -7,7 +7,7 @@ $connection = mysqli_connect("localhost", "root", "root", "handmade");
 
 
 if (!$connection) {
-    die("فشل الاتصال: " . mysqli_connect_error());
+    die("ERROR WHILE COONECTION " . mysqli_connect_error());
 }
 
 $_SESSION['user_id']=$_SESSION['user_id'];
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         mysqli_stmt_close($stmt);
     } else {
-        echo "خطأ في تحضير الاستعلام!";
+        echo "ERROR";
     }
 }
 

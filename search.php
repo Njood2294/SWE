@@ -19,16 +19,16 @@ if (!isset($_GET['query']) || empty(trim($_GET['query']))) {
 $query = trim($_GET['query']);
 
 $sql = "SELECT product_id, name, category_id FROM Product 
-        WHERE LOWER(name) LIKE LOWER(?)";
+        WHERE LOWER(name) LIKE LOWER(?) OR product_id = ?";
 $stmt = $connection->prepare($sql);
 if (!$stmt) {
     echo json_encode(["error" => "Query preparation error: " . $connection->error]);
     exit;
 }
 
-
 $searchTerm = "%$query%";
-$stmt->bind_param("s", $searchTerm);
+$stmt->bind_param("ss", $searchTerm, $query);
+
 $stmt->execute();
 
 $result = $stmt->get_result();
