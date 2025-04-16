@@ -113,15 +113,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
         background: darkred;
     }
 
-    .cart-message {
-        display: none;
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px;
-        margin-top: 10px;
-        text-align: center;
-        border-radius: 5px;
-    }
+.cart-message {
+    display: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
 
     .error-message {
         display: none;
@@ -155,6 +157,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
             echo '<div class="product-title">' . $row['name'] . '</div>';
             echo '<div class="product-price">' . $row['price'] . ' SAR</div>';
             echo '<button class="add-to-cart">Add to cart</button>';
+            echo '<div class="cart-message">Item added to cart!</div>'; // ✅ add this line
             echo '</div>';
         }
     } else {
@@ -179,43 +182,44 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
 </footer>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Handle Add to Cart functionality
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function () {
-                const productCard = this.closest('.product-card');
-                const cartMessage = productCard.querySelector('.cart-message');
-                
-                // Hide any previously shown messages
-                document.querySelectorAll('.cart-message').forEach(message => message.style.display = "none");
+   document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function () {
+            const productCard = this.closest('.product-card');
+            const productName = productCard.querySelector('.product-title').textContent;
+            const productPrice = parseFloat(productCard.querySelector('.product-price').textContent);
+            const productImage = productCard.querySelector('.product-image').src;
 
-                // Show the success message for the clicked product
-                cartMessage.style.display = "block";
-                cartMessage.textContent = "Item added to cart!";
+            // ✅ Show cart message
+            const cartMessage = productCard.querySelector('.cart-message');
+            cartMessage.style.display = "block";
+            cartMessage.textContent = "Item added to cart!";
 
-                // Add the item to the cart (this part can be customized)
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-                const id = productCard.querySelector('.product-title').textContent;
-                const price = parseFloat(productCard.querySelector('.product-price').textContent.split(' ')[0]);
-                const imageSrc = productCard.querySelector('img').src; // جلب رابط الصورة
+            // ✅ Add to cart in localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let existingItem = cart.find(item => item.name === productName);
 
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: productPrice,
+                    image: productImage,
+                    quantity: 1
+                });
+            }
 
-                let item = cart.find(item => item.name === id);
-                if (item) {
-                 item.quantity += 1;
-                } else {
-                  cart.push({ name: id, price: price, image: imageSrc, quantity: 1 });
-                }
+            localStorage.setItem('cart', JSON.stringify(cart));
 
-                localStorage.setItem('cart', JSON.stringify(cart));
-            });
-        });
-
-        // Handle the redirection to the cart when clicking the cart icon
-        document.getElementById('cart-link').addEventListener('click', function () {
-            window.location.href = "Cart.html";
+            // ✅ Hide the message after a short time
+            setTimeout(() => {
+                cartMessage.style.display = "none";
+            }, 2000);
         });
     });
+});
+ 
 </script>
 
 </body>
